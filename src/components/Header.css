@@ -1,0 +1,27 @@
+.header {
+  background-color: #133153;
+  color: #ffffff;
+  display: flex;
+  flex-flow: row wrap;
+  height: 70px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.header .brand {
+  margin: 0 50px;
+  height: 70px;
+}
+
+.header .brand img {
+  height: 45px;
+}
+
+.header a {
+  text-decoration: none;
+  display: flex;
+  color: #fff;
+  align-items: center;
+}
