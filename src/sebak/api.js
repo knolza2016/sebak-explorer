@@ -1,30 +1,10 @@
 import axios from 'axios'
 
-const API_BASE = process.env.REACT_APP_SEBAK_API_ENDPOINT;
+const SEBAK_API_BASE = process.env.REACT_APP_SEBAK_API_BASE;
 
-function getLink(endpoint) {
-  return new Promise(
-    async function (resolve, reject) {
-      const res = await axios.get(endpoint);
-      resolve(getLinkObject(res));
-    }
-  );
-}
-
-function getLinkObject(res) {
-  return {
-    data: res.data._embedded.records,
-    next: function () {
-      return getLink(`${API_BASE}${res.data._links.next.href}`);
-    },
-    previous: function () {
-      return getLink(`${API_BASE}${res.data._links.prev.href}`);
-    }
-  }
-}
-
-export function getAccount(id, params = {}) {
-  return axios.get(`${API_BASE}/api/v1/accounts/${id}`, {
+export function getAccount(publicKey, params = {}) {
+  // todo make API smart based on _links content
+  return axios.get(`${SEBAK_API_BASE}/api/v1/accounts/${publicKey}`, {
     params: {
       limit: params.limit,
       cursor: params.cursor,
@@ -33,8 +13,20 @@ export function getAccount(id, params = {}) {
   })
 }
 
-export function getOperationsForAccount(id, params = {}) {
-  return axios.get(`${API_BASE}/api/v1/accounts/${id}/operations`, {
+export function getOperationsForAccount(publicKey, params = {}) {
+  // todo make API smart based on _links content
+  return axios.get(`${SEBAK_API_BASE}/api/v1/accounts/${publicKey}/operations`, {
+    params: {
+      limit: params.limit,
+      cursor: params.cursor,
+      order: params.order
+    }
+  })
+}
+
+export function getTransactionsForAccount(publicKey, params = {}) {
+  // todo make API smart based on _links content
+  return axios.get(`${SEBAK_API_BASE}/api/v1/accounts/${publicKey}/transactions`, {
     params: {
       limit: params.limit,
       cursor: params.cursor,
@@ -44,9 +36,10 @@ export function getOperationsForAccount(id, params = {}) {
 }
 
 export function getTransactions(params = {}) {
+  // todo make API smart based on _links content
   return new Promise(
     async function (resolve, reject) {
-      const res = await axios.get(`${API_BASE}/api/v1/transactions`, {
+      const res = await axios.get(`${SEBAK_API_BASE}/api/v1/transactions`, {
         params: {
           limit: params.limit,
           cursor: params.cursor,
@@ -59,8 +52,9 @@ export function getTransactions(params = {}) {
   );
 }
 
-export function getTransactionsForAccount(id, params = {}) {
-  return axios.get(`${API_BASE}/api/v1/accounts/${id}/transactions`, {
+export function getTransaction(transactionHash, params = {}) {
+  // todo make API smart based on _links content
+  return axios.get(`${SEBAK_API_BASE}/api/v1/transactions/${transactionHash}`, {
     params: {
       limit: params.limit,
       cursor: params.cursor,
@@ -69,8 +63,9 @@ export function getTransactionsForAccount(id, params = {}) {
   })
 }
 
-export function getTransaction(hash, params = {}) {
-  return axios.get(`${API_BASE}/api/v1/transactions/${hash}`, {
+export function getOperationsForTransaction(transactionHash, params = {}) {
+  // todo make API smart based on _links content
+  return axios.get(`${SEBAK_API_BASE}/api/v1/transactions/${transactionHash}/operations`, {
     params: {
       limit: params.limit,
       cursor: params.cursor,
@@ -79,12 +74,23 @@ export function getTransaction(hash, params = {}) {
   })
 }
 
-export function getOperationsForTransaction(hash, params = {}) {
-  return axios.get(`${API_BASE}/api/v1/transactions/${hash}/operations`, {
-    params: {
-      limit: params.limit,
-      cursor: params.cursor,
-      order: params.order
+function getLink(endpoint) {
+  return new Promise(
+    async function (resolve, reject) {
+      const res = await axios.get(endpoint);
+      resolve(getLinkObject(res));
     }
-  })
+  );
+}
+
+function getLinkObject(response) {
+  return {
+    data: response.data._embedded.records,
+    next: function () {
+      return getLink(`${SEBAK_API_BASE}${response.data._links.next.href}`);
+    },
+    previous: function () {
+      return getLink(`${SEBAK_API_BASE}${response.data._links.prev.href}`);
+    }
+  }
 }

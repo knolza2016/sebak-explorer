@@ -4,62 +4,83 @@ import * as transformer from './transformer';
 export function getTransactions(params = {}) {
   return new Promise(
     async function (resolve, reject) {
-      const response = await sebak.getTransactions(params);
-      const transactions = response.data;
-      const data = [];
+      try {
+        const transactions = (await sebak.getTransactions(params)).data;
+        const data = [];
 
-      for(const transaction of transactions) {
-        data.push(transformer.transformTransaction(transaction));
-      }
-
-      resolve(data);
-    }
-  );
-}
-
-export function getAccount(id, params = {}) {
-  return new Promise(
-    async function (resolve, reject) {
-      const response = await sebak.getAccount(id, params);
-      resolve(transformer.transformAccount(response.data));
-    }
-  );
-}
-
-export function getOperationsForAccount(id, params = {}) {
-  return new Promise(
-    async function (resolve, reject) {
-      const response = await sebak.getOperationsForAccount(id, params);
-      const operations = response.data._embedded.records;
-      const data = [];
-
-      for(const operation of operations) {
-        const transaction = await sebak.getTransaction(operation.tx_hash);
-        data.push(transformer.transformOperation(operation, transaction.data));
-      }
-
-      resolve(data);
-    }
-  );
-}
-
-export function getOperationsByTransactionsForAccount(id, params = {}) {
-  return new Promise(
-    async function (resolve, reject) {
-      const transactionsResponse = await sebak.getTransactionsForAccount(id, params);
-      const transactions = transactionsResponse.data._embedded.records;
-      const data = [];
-
-      for(const transaction of transactions) {
-        const operationsResponse = await sebak.getOperationsForTransaction(transaction.hash);
-        const operations = operationsResponse.data._embedded.records;
-
-        for(const operation of operations) {
-          data.push(transformer.transformOperation(operation, transaction));
+        for (const transaction of transactions) {
+          data.push(transformer.transformTransaction(transaction));
         }
-      }
 
-      resolve(data);
+        resolve(data);
+      } catch (error) {
+        reject(error);
+      }
     }
   );
+}
+
+export function getAccount(publicKey, params = {}) {
+  return new Promise(
+    async function (resolve, reject) {
+      try {
+        const response = await sebak.getAccount(publicKey, params);
+        resolve(transformer.transformAccount(response.data));
+      } catch (error) {
+        reject(error);
+      }
+    }
+  );
+}
+
+export function getOperationsForAccount(publicKey, params = {}) {
+  return new Promise(
+    async function (resolve, reject) {
+      try {
+        const operations = getRecords(await sebak.getOperationsForAccount(publicKey, params));
+        const data = [];
+
+        for (const operation of operations) {
+          const transaction = await sebak.getTransaction(operation.tx_hash);
+          data.push(transformer.transformOperation(operation, transaction.data));
+        }
+
+        resolve(data);
+      } catch (error) {
+        reject(error);
+      }
+    }
+  );
+}
+
+export function getOperationsByTransactionsForAccount(publicKey, params = {}) {
+  return new Promise(
+    async function (resolve, reject) {
+      try {
+        const transactions = getRecords(await sebak.getTransactionsForAccount(publicKey, params));
+        const data = [];
+
+        for (const transaction of transactions) {
+          const operationsForAccount = getRecords(await sebak.getOperationsForTransaction(transaction.hash))
+            .filter(operation => isOperationRelatedToAccount(operation, publicKey));
+
+          for (const operation of operationsForAccount) {
+            data.push(transformer.transformOperation(operation, transaction));
+          }
+        }
+
+        resolve(data);
+      } catch (error) {
+        error.reject(error);
+      }
+    }
+  );
+}
+
+function getRecords(response) {
+  return response.data._embedded.records;
+}
+
+const isOperationRelatedToAccount = (operation, publicKey) => {
+  return operation.source === publicKey || operation.body.target === publicKey;
 }
