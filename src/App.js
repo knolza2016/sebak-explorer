@@ -2,8 +2,14 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
+import Card from './components/Card';
 import routes from './routes';
 import { withRouter } from 'react-router-dom'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faSearch)
 
 class App extends Component {
   constructor(props) {
@@ -43,22 +49,23 @@ class App extends Component {
         <Header></Header>
         <div className="container">
           <div className="content">
-            <div className="control">
-              <input
-                className="input"
-                placeholder="Enter transaction id or public key"
-                value={this.state.identifier}
-                onChange={this.handleIdentifierChange}
-              >
-              </input>
-              <button
-                className="btn"
-                onClick={this.handleLookup}
-                disabled={!this.state.identifier}
-              >
-                Search
-              </button>
-            </div>
+            <Card title="Search">
+              <div className="control">
+                <input
+                  className="input"
+                  placeholder="Enter transaction id or public key"
+                  value={this.state.identifier}
+                  onChange={this.handleIdentifierChange}
+                >
+                </input>
+                <button
+                  className="btn"
+                  onClick={this.handleLookup}
+                >
+                  <FontAwesomeIcon icon="search" fixedWidth />
+                </button>
+              </div>
+            </Card>
             {routes.map((route) => (
               <Route key={route} path={route.path} component={route.component}/>
             ))}

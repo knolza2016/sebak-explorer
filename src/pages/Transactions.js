@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import * as sebak from '../sebak/service';
+import Card from '../components/Card';
 
 class Transactions extends Component {
   constructor(props) {
@@ -26,13 +27,13 @@ class Transactions extends Component {
   }
   render() {
     return (
-      <div>
+      <Card title="Transactions">
         <table className="table">
           <tbody>
             <tr className="table__header">
-              <th className="table__item">Hash</th>
-              <th className="table__item">Date</th>
-              <th className="table__item table__number">Operations</th>
+              <th className="table__item" width="70%">Hash</th>
+              <th className="table__item" width="20%">Date</th>
+              <th className="table__item  table__number" width="10%">Operations</th>
             </tr>
             {this.state.transactions.map((transaction) => (
               <tr className="table__content" key={transaction.hash}>
@@ -43,7 +44,7 @@ class Transactions extends Component {
             ))}
           </tbody>
         </table>
-      </div>
+      </Card>
     );
   }
 }

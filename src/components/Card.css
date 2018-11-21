@@ -1,0 +1,22 @@
+.card {
+  border-radius: 3px;
+  border: 1px solid #e0ecef;
+  background: #fff;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.card:not(:first-of-type) {
+  margin-top: 25px;
+}
+
+.card__title {
+  padding: 20px 30px 20px 30px;
+  color: #0A98BF;
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+
+.card__content {
+  padding: 0 30px 30px 30px;
+}
