@@ -18,6 +18,7 @@ export function transformAccount(account) {
 
 export function transformOperation(operation, transaction) {
   return {
+    hash: operation.hash,
     source: operation.source,
     target: operation.body.target,
     type: operation.type,
