@@ -10,6 +10,10 @@ class OperationsTable extends Component {
         return 'Create account'
       case 'payment':
         return 'Payment'
+      case 'collect-tx-fee':
+        return 'Collect transaction fee'
+      case 'inflation':
+        return "Inflation"
       default:
         return type;
     }
