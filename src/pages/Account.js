@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import sebakService from '../sebak/service';
 import Card from '../components/Card';
 import OperationsTable from '../components/OperationsTable';
+import LoadingIndicator from '../components/LoadingIndicator';
 
 class Account extends Component {
   constructor(props) {
@@ -33,12 +34,28 @@ class Account extends Component {
     return (
       <div>
         <Card title="Account">
-          Public key: {this.state.account.address}
-          <br/>
-          Balance: {this.state.account.balance}
+          {
+            !this.state.account.address &&
+            <LoadingIndicator/>
+          }
+          {
+            this.state.account.address &&
+            <div>
+              Public key: {this.state.account.address}
+              <br/>
+              Balance: {this.state.account.balance}
+            </div>
+          }
         </Card>
         <Card title="Operations">
-          <OperationsTable operations={this.state.account.operations}></OperationsTable>
+          {
+            this.state.account.operations.length === 0 &&
+            <LoadingIndicator/>
+          }
+          {
+            this.state.account.operations.length > 0 &&
+            <OperationsTable operations={this.state.account.operations}></OperationsTable>
+          }
         </Card>
       </div>
     );
