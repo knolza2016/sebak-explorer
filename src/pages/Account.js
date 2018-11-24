@@ -9,7 +9,6 @@ class Account extends Component {
     super(props);
     this.state = {
       account: {
-        operations: []
       }
     }
   }
