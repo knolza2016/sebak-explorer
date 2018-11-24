@@ -31,21 +31,21 @@ class Transactions extends Component {
         {
           this.state.transactions.length > 0 &&
           <table className="table">
-          <tbody>
-            <tr className="table__header">
-              <th className="table__item" width="70%">Hash</th>
-              <th className="table__item" width="20%">Date</th>
-              <th className="table__item  table__number" width="10%">Operations</th>
-            </tr>
-            {this.state.transactions.map((transaction) => (
-              <tr className="table__content" key={transaction.hash}>
-                <td className="table__item">{transaction.hash}</td>
-                <td className="table__item">{dateFormatter.formatAsDatetime(transaction.date)}</td>
-                <td className="table__item table__number">{transaction.operationCount}</td>
+            <tbody>
+              <tr className="table__header">
+                <th className="table__item" width="70%">Hash</th>
+                <th className="table__item" width="20%">Date</th>
+                <th className="table__item  table__number" width="10%">Operations</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+              {this.state.transactions.map((transaction) => (
+                <tr className="table__content" key={transaction.hash}>
+                  <td className="table__item">{transaction.hash}</td>
+                  <td className="table__item">{dateFormatter.formatAsDatetime(transaction.date)}</td>
+                  <td className="table__item table__number">{transaction.operationCount}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         }
       </Card>
     );
