@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import moment from 'moment';
-import * as sebak from '../sebak/service';
+import dateFormatter from '../util/formatters/date.formatter';
+import sebakService from '../sebak/service';
 import Card from '../components/Card';
 
 class Transactions extends Component {
@@ -11,7 +11,7 @@ class Transactions extends Component {
     }
   }
   async componentDidMount() {
-    const transactions = await sebak.getTransactions({
+    const transactions = await sebakService.getTransactions({
       limit: 10,
       reverse: true
     });
@@ -19,11 +19,6 @@ class Transactions extends Component {
     this.setState({
       transactions: transactions
     });
-  }
-  getFormattedDate(date) {
-    const momentDate = moment(date);
-    momentDate.locale(navigator.language || navigator.userLanguage);
-    return `${momentDate.format('L')}, ${momentDate.format('LTS')}`;
   }
   render() {
     return (
@@ -38,7 +33,7 @@ class Transactions extends Component {
             {this.state.transactions.map((transaction) => (
               <tr className="table__content" key={transaction.hash}>
                 <td className="table__item">{transaction.hash}</td>
-                <td className="table__item">{this.getFormattedDate(transaction.date)}</td>
+                <td className="table__item">{dateFormatter.formatAsDatetime(transaction.date)}</td>
                 <td className="table__item table__number">{transaction.operationCount}</td>
               </tr>
             ))}
