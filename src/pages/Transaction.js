@@ -10,19 +10,31 @@ class Account extends Component {
     super(props);
     this.state = {
       transaction: {
-        operations: []
       }
     }
   }
   async componentDidMount() {
     const { hash } = this.props.match.params;
 
-    const transaction = await sebakService.getTransaction(hash);
-    transaction.operations = await sebakService.getOperationsForTransaction(transaction);
-
+    sebakService.getTransaction(hash)
+      .then(this.setTransactionOnState)
+      .then(transaction => sebakService.getOperationsForTransaction(transaction))
+      .then(this.setOperationsOnState);
+  }
+  setTransactionOnState = transaction => {
     this.setState({
       transaction: transaction
     });
+
+    return transaction;
+  }
+  setOperationsOnState = res => {
+    this.setState(previousState => ({
+      transaction: {
+        ...previousState.transaction,
+        operations: res
+      }
+    }));
   }
   render() {
     return (
@@ -45,11 +57,11 @@ class Account extends Component {
         </Card>
         <Card title="Operations">
           {
-            this.state.transaction.operations.length === 0 &&
+            !this.state.transaction.operations &&
             <LoadingIndicator/>
           }
           {
-            this.state.transaction.operations.length > 0 &&
+            this.state.transaction.operations &&
             <OperationsTable operations={this.state.transaction.operations}></OperationsTable>
           }
         </Card>
