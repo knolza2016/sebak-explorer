@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import sebakService from '../sebak/service';
 import Card from '../components/Card';
 import OperationsTable from '../components/OperationsTable';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class Operations extends Component {
   constructor(props) {
@@ -21,6 +22,14 @@ class Operations extends Component {
     });
   }
   render() {
+    if (this.state.operations.length === 0) {
+      return (
+        <Card title="Operations">
+          <FontAwesomeIcon icon="circle-notch" className="loading-indicator" fixedWidth spin />
+        </Card>
+      );
+    }
+
     return (
       <Card title="Operations">
         <OperationsTable operations={this.state.operations}></OperationsTable>

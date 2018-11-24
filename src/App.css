@@ -124,3 +124,9 @@ body {
   background-color: #666;
   cursor: default;
 }
+
+.loading-indicator {
+  font-size: 1.5rem;
+  color: #0A98BF;
+  align-self: center;
+}

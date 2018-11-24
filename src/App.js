@@ -6,9 +6,11 @@ import { withRouter } from 'react-router-dom'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons'
 import Router from "./Router";
 
 library.add(faSearch)
+library.add(faCircleNotch)
 
 class App extends Component {
   constructor(props) {

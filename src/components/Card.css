@@ -19,4 +19,6 @@
 
 .card__content {
   padding: 0 30px 30px 30px;
+  display: flex;
+  flex-direction: column;
 }
