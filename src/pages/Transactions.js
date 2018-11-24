@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import dateFormatter from '../util/formatters/date.formatter';
 import sebakService from '../sebak/service';
 import Card from '../components/Card';
+import LoadingIndicator from '../components/LoadingIndicator';
 
 class Transactions extends Component {
   constructor(props) {
@@ -23,7 +24,13 @@ class Transactions extends Component {
   render() {
     return (
       <Card title="Transactions">
-        <table className="table">
+        {
+          this.state.transactions.length === 0 &&
+          <LoadingIndicator/>
+        }
+        {
+          this.state.transactions.length > 0 &&
+          <table className="table">
           <tbody>
             <tr className="table__header">
               <th className="table__item" width="70%">Hash</th>
@@ -39,6 +46,7 @@ class Transactions extends Component {
             ))}
           </tbody>
         </table>
+        }
       </Card>
     );
   }
