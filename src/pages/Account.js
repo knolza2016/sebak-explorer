@@ -32,7 +32,7 @@ class Account extends Component {
   }
   render() {
     return (
-      <div>
+      <React.Fragment>
         <Card title="Account">
           {
             !this.state.account.address &&
@@ -57,7 +57,7 @@ class Account extends Component {
             <OperationsTable operations={this.state.account.operations}></OperationsTable>
           }
         </Card>
-      </div>
+      </React.Fragment>
     );
   }
 }

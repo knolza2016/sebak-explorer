@@ -7,13 +7,13 @@ import Account from "./pages/Account";
 class Router extends Component {
   render() {
     return (
-      <div>
+      <React.Fragment>
         <Route path="/transactions" component={Transactions}></Route>
         <Route path="/operations" component={Operations}></Route>
         <Route path="/accounts/:publicKey" render={props => {
           return <Account {...props} key={props.match.params.publicKey}></Account>
         }}></Route>
-      </div>
+      </React.Fragment>
     );
   }
 }
