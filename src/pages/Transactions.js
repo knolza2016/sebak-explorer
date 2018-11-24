@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import dateFormatter from '../util/formatters/date.formatter';
 import sebakService from '../sebak/service';
 import Card from '../components/Card';
@@ -39,7 +40,11 @@ class Transactions extends Component {
               </tr>
               {this.state.transactions.map((transaction) => (
                 <tr className="table__content" key={transaction.hash}>
-                  <td className="table__item">{transaction.hash}</td>
+                  <td className="table__item">
+                    <Link to={`/transactions/${transaction.hash}`} className="table__link">
+                      {transaction.hash}
+                    </Link>
+                  </td>
                   <td className="table__item">{dateFormatter.formatAsDatetime(transaction.date)}</td>
                   <td className="table__item table__number">{transaction.operationCount}</td>
                 </tr>
