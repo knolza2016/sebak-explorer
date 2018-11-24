@@ -16,18 +16,19 @@ class Account extends Component {
   async componentDidMount() {
     const { publicKey } = this.props.match.params;
 
-    const data = await Promise.all([
-      sebakService.getAccount(publicKey),
-      sebakService.getOperationsForAccount(publicKey)
-    ]);
+    sebakService.getAccount(publicKey).then(res => {
+      this.setState({
+        account: res
+      });
+    });
 
-    const account = {
-      ...data[0],
-      operations: data[1]
-    }
-
-    this.setState({
-      account: account
+    sebakService.getOperationsForAccount(publicKey).then(res => {
+      this.setState(previousState => ({
+        account: {
+          ...previousState.account,
+          operations: res
+        }
+      }));
     });
   }
   render() {
@@ -49,11 +50,11 @@ class Account extends Component {
         </Card>
         <Card title="Operations">
           {
-            this.state.account.operations.length === 0 &&
+            !this.state.account.operations &&
             <LoadingIndicator/>
           }
           {
-            this.state.account.operations.length > 0 &&
+            this.state.account.operations &&
             <OperationsTable operations={this.state.account.operations}></OperationsTable>
           }
         </Card>
