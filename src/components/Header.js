@@ -11,6 +11,7 @@ class Header extends Component {
           <img src={Logos.Boscoin} alt="BOScoin explorer"/>
         </Link>
         <Link to={`/transactions`}>Transactions</Link>
+        <Link to={`/operations`}>Operations</Link>
       </div>
     );
   }
