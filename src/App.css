@@ -40,6 +40,10 @@ body {
   font-weight: 600;
 }
 
+.table__header .table__item {
+  padding: 0px 15px 7px 15px;
+}
+
 .table__content {
   border-bottom: 1px solid #dfdfdf;
 }
