@@ -63,10 +63,13 @@ export function getOperationsForAccount(publicKey, params = {}) {
       try {
         const operations = getRecords(await sebakApi.getOperationsForAccount(publicKey, params));
         const data = [];
+        let transaction = {};
 
         for (const operation of operations) {
-          const transaction = await sebakApi.getTransaction(operation.tx_hash);
-          data.push(sebakTransformer.transformOperation(operation, transaction.data));
+          if(operation.tx_hash !== transaction.hash) {
+            transaction = (await sebakApi.getTransaction(operation.tx_hash)).data;
+          }
+          data.push(sebakTransformer.transformOperation(operation, transaction));
         }
 
         resolve(data);
