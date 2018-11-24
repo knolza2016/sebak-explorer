@@ -29,9 +29,7 @@ class OperationsTable extends Component {
           {this.props.operations.map((operation) => (
             <tr className="table__content" key={operation.hash}>
               <td className="table__item">
-                <Link to={`/operations/${operation.hash}`} className="table__link">
-                  {stringFormatter.truncate(operation.hash, 10, '...')}
-                </Link>
+                {stringFormatter.truncate(operation.hash, 10, '...')}
               </td>
               <td className="table__item">
                 <Link to={`/accounts/${operation.source}`} className="table__link">
