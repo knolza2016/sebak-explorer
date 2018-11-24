@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Transactions from "./pages/Transactions";
+import Transaction from "./pages/Transaction";
 import Operations from "./pages/Operations";
 import Account from "./pages/Account";
 
@@ -8,11 +9,14 @@ class Router extends Component {
   render() {
     return (
       <React.Fragment>
-        <Route path="/transactions" component={Transactions}></Route>
-        <Route path="/operations" component={Operations}></Route>
-        <Route path="/accounts/:publicKey" render={props => {
-          return <Account {...props} key={props.match.params.publicKey}></Account>
-        }}></Route>
+        <Switch>
+          <Route path="/transactions/:hash" component={Transaction}></Route>
+          <Route path="/transactions/" component={Transactions}></Route>
+          <Route path="/operations" component={Operations}></Route>
+          <Route path="/accounts/:publicKey" render={props => {
+            return <Account {...props} key={props.match.params.publicKey}></Account>
+          }}></Route>
+        </Switch>
       </React.Fragment>
     );
   }

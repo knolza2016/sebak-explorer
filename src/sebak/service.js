@@ -4,8 +4,10 @@ import sebakTransformer from './transformer';
 const sebakService = {
   getAccount,
   getTransactions,
+  getTransaction,
+  getOperations,
   getOperationsForAccount,
-  getOperations
+  getOperationsForTransaction
 }
 
 export default sebakService;
@@ -22,6 +24,19 @@ export function getTransactions(params = {}) {
         }
 
         resolve(data);
+      } catch (error) {
+        reject(error);
+      }
+    }
+  );
+}
+
+export function getTransaction(transactionHash, params = {}) {
+  return new Promise(
+    async function (resolve, reject) {
+      try {
+        const response = await sebakApi.getTransaction(transactionHash, params);
+        resolve(sebakTransformer.transformTransaction(response.data));
       } catch (error) {
         reject(error);
       }
@@ -52,6 +67,25 @@ export function getOperationsForAccount(publicKey, params = {}) {
         for (const operation of operations) {
           const transaction = await sebakApi.getTransaction(operation.tx_hash);
           data.push(sebakTransformer.transformOperation(operation, transaction.data));
+        }
+
+        resolve(data);
+      } catch (error) {
+        reject(error);
+      }
+    }
+  );
+}
+
+export function getOperationsForTransaction(transaction, params = {}) {
+  return new Promise(
+    async function (resolve, reject) {
+      try {
+        const operations = getRecords(await sebakApi.getOperationsForTransaction(transaction.hash, params));
+        const data = [];
+
+        for (const operation of operations) {
+          data.push(sebakTransformer.transformOperation(operation, transaction));
         }
 
         resolve(data);
