@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import Card from './components/Card';
-import routes from './routes';
 import { withRouter } from 'react-router-dom'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import Router from "./Router";
 
 library.add(faSearch)
 
@@ -66,9 +65,7 @@ class App extends Component {
                 </button>
               </div>
             </Card>
-            {routes.map((route) => (
-              <Route key={route.path} path={route.path} component={route.component}/>
-            ))}
+            <Router></Router>
           </div>
         </div>
       </div>
