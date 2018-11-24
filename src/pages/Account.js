@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as sebak from '../sebak/service';
+import sebakService from '../sebak/service';
 import Card from '../components/Card';
 import OperationsTable from '../components/OperationsTable';
 
@@ -16,8 +16,8 @@ class Account extends Component {
     const { publicKey } = this.props.match.params;
 
     const data = await Promise.all([
-      sebak.getAccount(publicKey),
-      sebak.getOperationsByTransactionsForAccount(publicKey)
+      sebakService.getAccount(publicKey),
+      sebakService.getOperationsForAccount(publicKey)
     ]);
 
     const account = {

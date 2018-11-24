@@ -1,5 +1,16 @@
 import axios from 'axios'
 
+const sebakApi = {
+  getAccount,
+  getOperationsForAccount,
+  getTransactionsForAccount,
+  getTransactions,
+  getTransaction,
+  getOperationsForTransaction
+}
+
+export default sebakApi;
+
 const SEBAK_API_BASE = process.env.REACT_APP_SEBAK_API_BASE;
 
 export function getAccount(publicKey, params = {}) {
