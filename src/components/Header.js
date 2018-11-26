@@ -10,8 +10,14 @@ class Header extends Component {
         <Link to={`/`} className="brand">
           <img src={Logos.Boscoin} alt="BOScoin explorer"/>
         </Link>
-        <Link to={`/transactions`}>Transactions</Link>
-        <Link to={`/operations`}>Operations</Link>
+        <ul className="menu">
+          <li>
+            <Link to={`/transactions`}>Transactions</Link>
+          </li>
+          <li>
+            <Link to={`/operations`}>Operations</Link>
+          </li>
+        </ul>
       </div>
     );
   }

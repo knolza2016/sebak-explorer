@@ -25,3 +25,12 @@
   color: #fff;
   align-items: center;
 }
+
+.header .menu li {
+  display: inline-block;
+}
+
+.header .menu li a {
+  height: 70px;
+  padding: 0 25px 0 0;
+}
