@@ -4,6 +4,7 @@ import Transactions from "./pages/Transactions";
 import Transaction from "./pages/Transaction";
 import Operations from "./pages/Operations";
 import Account from "./pages/Account";
+import NotFound from "./pages/NotFound";
 
 class Router extends Component {
   render() {
@@ -16,6 +17,7 @@ class Router extends Component {
           <Route path="/accounts/:publicKey" render={props => {
             return <Account {...props} key={props.match.params.publicKey}></Account>
           }}></Route>
+          <Route component={NotFound} />
         </Switch>
       </React.Fragment>
     );
