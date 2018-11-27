@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons'
 import Router from "./Router";
+import "babel-polyfill"
 
 library.add(faSearch)
 library.add(faCircleNotch)
