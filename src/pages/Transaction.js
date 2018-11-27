@@ -6,7 +6,7 @@ import LoadingIndicator from '../components/LoadingIndicator';
 import dateFormatter from '../util/formatters/date.formatter';
 import NotFound from '../pages/NotFound';
 
-class Account extends Component {
+class Transaction extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -83,4 +83,4 @@ class Account extends Component {
   }
 }
 
-export default Account;
+export default Transaction;
