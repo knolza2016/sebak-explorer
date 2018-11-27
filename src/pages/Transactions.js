@@ -14,8 +14,8 @@ class Transactions extends Component {
   }
   async componentDidMount() {
     const transactions = await sebakService.getTransactions({
-      limit: 10,
-      reverse: true
+      reverse: true,
+      limit: 100
     });
 
     this.setState({
