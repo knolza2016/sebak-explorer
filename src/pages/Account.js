@@ -51,7 +51,7 @@ class Account extends Component {
   }
   render() {
     if(this.state.notFound) {
-      return (<NotFound></NotFound>)
+      return <NotFound/>
     }
 
     return (

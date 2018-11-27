@@ -5,7 +5,7 @@ class NotFound extends Component {
   render() {
     return (
       <Card title="Not found">
-        The page you have requested does not exist.
+        The requested page does not exist.
       </Card>
     );
   }
