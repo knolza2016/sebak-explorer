@@ -8,7 +8,7 @@ export default sebakTransformer;
 
 const currencyDivisor = 10000000;
 
-export function transformTransaction(transaction) {
+function transformTransaction(transaction) {
   return {
     date: transaction.created,
     hash: transaction.hash,
@@ -17,20 +17,20 @@ export function transformTransaction(transaction) {
   }
 }
 
-export function transformAccount(account) {
+function transformAccount(account) {
   return {
     address: account.address,
     balance: account.balance / currencyDivisor
   }
 }
 
-export function transformOperation(operation, transaction) {
+function transformOperation(operation) {
   return {
     hash: operation.hash,
     source: operation.source,
     target: operation.body.target,
     type: operation.type,
-    date: transaction.created,
+    date: operation.confirmed,
     amount: operation.body.amount / currencyDivisor
   };
 }

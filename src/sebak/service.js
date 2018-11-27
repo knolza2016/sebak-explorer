@@ -12,7 +12,7 @@ const sebakService = {
 
 export default sebakService;
 
-export function getTransactions(params = {}) {
+function getTransactions(params = {}) {
   return new Promise(
     async function (resolve, reject) {
       try {
@@ -31,7 +31,7 @@ export function getTransactions(params = {}) {
   );
 }
 
-export function getTransaction(transactionHash, params = {}) {
+function getTransaction(transactionHash, params = {}) {
   return new Promise(
     async function (resolve, reject) {
       try {
@@ -44,7 +44,7 @@ export function getTransaction(transactionHash, params = {}) {
   );
 }
 
-export function getAccount(publicKey, params = {}) {
+function getAccount(publicKey, params = {}) {
   return new Promise(
     async function (resolve, reject) {
       try {
@@ -57,19 +57,15 @@ export function getAccount(publicKey, params = {}) {
   );
 }
 
-export function getOperationsForAccount(publicKey, params = {}) {
+function getOperationsForAccount(publicKey, params = {}) {
   return new Promise(
     async function (resolve, reject) {
       try {
         const operations = getRecords(await sebakApi.getOperationsForAccount(publicKey, params));
         const data = [];
-        let transaction = {};
 
         for (const operation of operations) {
-          if(operation.tx_hash !== transaction.hash) {
-            transaction = (await sebakApi.getTransaction(operation.tx_hash)).data;
-          }
-          data.push(sebakTransformer.transformOperation(operation, transaction));
+          data.push(sebakTransformer.transformOperation(operation));
         }
 
         resolve(data);
@@ -88,7 +84,7 @@ export function getOperationsForTransaction(transaction, params = {}) {
         const data = [];
 
         for (const operation of operations) {
-          data.push(sebakTransformer.transformOperation(operation, transaction));
+          data.push(sebakTransformer.transformOperation(operation));
         }
 
         resolve(data);
@@ -111,7 +107,7 @@ export function getOperations(params = {}) {
             const operations = getRecords(await sebakApi.getOperationsForTransaction(transaction.hash));
 
             for (const operation of operations) {
-              data.push(sebakTransformer.transformOperation(operation, transaction));
+              data.push(sebakTransformer.transformOperation(operation));
 
               if (data.length === params.limit) {
                 break transactionsLoop;
