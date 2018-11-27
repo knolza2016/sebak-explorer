@@ -12,7 +12,9 @@ class Router extends Component {
     return (
       <React.Fragment>
         <Switch>
-          <Route path="/transactions/:hash" component={Transaction}/>
+          <Route path="/transactions/:hash" render={props => {
+            return <Transaction {...props} key={props.match.params.hash}/>
+          }}/>/>
           <Route path="/transactions/" component={Transactions}/>
           <Route path="/operations" component={Operations}/>
           <Route path="/accounts/:publicKey" render={props => {
