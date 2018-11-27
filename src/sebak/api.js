@@ -6,7 +6,8 @@ const sebakApi = {
   getTransactionsForAccount,
   getTransactions,
   getTransaction,
-  getOperationsForTransaction
+  getOperationsForTransaction,
+  getNetInformation
 }
 
 export default sebakApi;
@@ -59,6 +60,10 @@ function getOperationsForTransaction(transactionHash, params = {}) {
   return axios.get(`${SEBAK_API_BASE}/api/v1/transactions/${transactionHash}/operations`, {
     params: params
   })
+}
+
+function getNetInformation() {
+  return axios.get(`${SEBAK_API_BASE}`)
 }
 
 function getLink(endpoint) {

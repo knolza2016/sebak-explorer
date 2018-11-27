@@ -7,7 +7,8 @@ const sebakService = {
   getTransaction,
   getOperations,
   getOperationsForAccount,
-  getOperationsForTransaction
+  getOperationsForTransaction,
+  getNetInformation
 }
 
 export default sebakService;
@@ -116,6 +117,22 @@ export function getOperations(params = {}) {
           }
 
         resolve(data);
+      } catch (error) {
+        reject(error);
+      }
+    }
+  );
+}
+
+export function getNetInformation() {
+  return new Promise(
+    async function (resolve, reject) {
+      try {
+        const netInformation = await sebakApi.getNetInformation();
+
+        // todo transform data
+
+        resolve(netInformation);
       } catch (error) {
         reject(error);
       }
