@@ -3,6 +3,7 @@ import sebakService from '../sebak/service';
 import Card from '../components/Card';
 import OperationsTable from '../components/OperationsTable';
 import LoadingIndicator from '../components/LoadingIndicator';
+import NotFound from '../pages/NotFound';
 
 class Account extends Component {
   constructor(props) {
@@ -12,28 +13,47 @@ class Account extends Component {
       }
     }
   }
-  async componentDidMount() {
+  componentDidMount() {
     const { publicKey } = this.props.match.params;
 
-    sebakService.getAccount(publicKey).then(res => {
-      this.setState({
-        account: res
-      });
-    });
+    sebakService
+      .getAccount(publicKey)
+      .then(this.setAccountOnState)
+      .catch(this.showErrorPage);
 
-    sebakService.getOperationsForAccount(publicKey, {
-      reverse: true,
-      limit: 100
-    }).then(res => {
-      this.setState(previousState => ({
-        account: {
-          ...previousState.account,
-          operations: res
-        }
-      }));
+    sebakService
+      .getOperationsForAccount(publicKey, {
+        reverse: true,
+        limit: 100
+      })
+      .then(this.setOperationsOnState)
+      .catch(this.showErrorPage);
+  }
+  setAccountOnState = res => {
+    this.setState({
+      account: res
     });
   }
+  setOperationsOnState = res => {
+    this.setState(previousState => ({
+      account: {
+        ...previousState.account,
+        operations: res
+      }
+    }));
+  }
+  showErrorPage = error => {
+    if (error.response.status !== 200) {
+      this.setState({
+        notFound: true
+      });
+    }
+  }
   render() {
+    if(this.state.notFound) {
+      return (<NotFound></NotFound>)
+    }
+
     return (
       <React.Fragment>
         <Card title="Account">
