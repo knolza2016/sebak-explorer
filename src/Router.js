@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import Dashboard from "./pages/Dashboard";
 import Transactions from "./pages/Transactions";
 import Transaction from "./pages/Transaction";
 import Operations from "./pages/Operations";
@@ -11,12 +12,13 @@ class Router extends Component {
     return (
       <React.Fragment>
         <Switch>
-          <Route path="/transactions/:hash" component={Transaction}></Route>
-          <Route path="/transactions/" component={Transactions}></Route>
-          <Route path="/operations" component={Operations}></Route>
+          <Route path="/transactions/:hash" component={Transaction}/>
+          <Route path="/transactions/" component={Transactions}/>
+          <Route path="/operations" component={Operations}/>
           <Route path="/accounts/:publicKey" render={props => {
-            return <Account {...props} key={props.match.params.publicKey}></Account>
-          }}></Route>
+            return <Account {...props} key={props.match.params.publicKey}/>
+          }}/>
+          <Route path="/" component={Dashboard}/>
           <Route component={NotFound} />
         </Switch>
       </React.Fragment>
