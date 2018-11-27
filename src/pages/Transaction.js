@@ -4,6 +4,7 @@ import Card from '../components/Card';
 import OperationsTable from '../components/OperationsTable';
 import LoadingIndicator from '../components/LoadingIndicator';
 import dateFormatter from '../util/formatters/date.formatter';
+import NotFound from '../pages/NotFound';
 
 class Account extends Component {
   constructor(props) {
@@ -19,7 +20,8 @@ class Account extends Component {
     sebakService.getTransaction(hash)
       .then(this.setTransactionOnState)
       .then(transaction => sebakService.getOperationsForTransaction(transaction))
-      .then(this.setOperationsOnState);
+      .then(this.setOperationsOnState)
+      .catch(this.showErrorPage);
   }
   setTransactionOnState = transaction => {
     this.setState({
@@ -36,7 +38,18 @@ class Account extends Component {
       }
     }));
   }
+  showErrorPage = error => {
+    if (error.response.status !== 200) {
+      this.setState({
+        notFound: true
+      });
+    }
+  }
   render() {
+    if(this.state.notFound) {
+      return <NotFound/>
+    }
+
     return (
       <React.Fragment>
         <Card title="Transaction">
