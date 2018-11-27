@@ -21,7 +21,10 @@ class Account extends Component {
       });
     });
 
-    sebakService.getOperationsForAccount(publicKey).then(res => {
+    sebakService.getOperationsForAccount(publicKey, {
+      reverse: true,
+      limit: 100
+    }).then(res => {
       this.setState(previousState => ({
         account: {
           ...previousState.account,
