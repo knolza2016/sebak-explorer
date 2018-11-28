@@ -9,7 +9,9 @@ class Transactions extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      transactions: []
+      transactions: {
+        data: []
+      }
     }
   }
   async componentDidMount() {
@@ -19,18 +21,18 @@ class Transactions extends Component {
     });
 
     this.setState({
-      transactions: transactions
+      transactions
     });
   }
   render() {
     return (
       <Card title="Transactions">
         {
-          this.state.transactions.length === 0 &&
+          this.state.transactions.data.length === 0 &&
           <LoadingIndicator/>
         }
         {
-          this.state.transactions.length > 0 &&
+          this.state.transactions.data.length > 0 &&
           <table className="table">
             <tbody>
               <tr className="table__header">
@@ -38,7 +40,7 @@ class Transactions extends Component {
                 <th className="table__item" width="20%">Date</th>
                 <th className="table__item  table__number" width="10%">Operations</th>
               </tr>
-              {this.state.transactions.map((transaction) => (
+              {this.state.transactions.data.map((transaction) => (
                 <tr className="table__content" key={transaction.hash}>
                   <td className="table__item">
                     <Link to={`/transactions/${transaction.hash}`} className="table__link">

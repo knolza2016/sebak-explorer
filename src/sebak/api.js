@@ -7,7 +7,8 @@ const sebakApi = {
   getTransactions,
   getTransaction,
   getOperationsForTransaction,
-  getNetInformation
+  getNetInformation,
+  getLink
 }
 
 export default sebakApi;
@@ -39,11 +40,9 @@ function getTransactions(params = {}) {
   // todo make API smart based on _links content
   return new Promise(
     async function (resolve, reject) {
-      const res = await axios.get(`${SEBAK_API_BASE}/api/v1/transactions`, {
+      resolve(await axios.get(`${SEBAK_API_BASE}/api/v1/transactions`, {
         params: params
-      })
-
-      resolve(getLinkObject(res));
+      }));
     }
   );
 }
@@ -67,22 +66,5 @@ function getNetInformation() {
 }
 
 function getLink(endpoint) {
-  return new Promise(
-    async function (resolve, reject) {
-      const res = await axios.get(endpoint);
-      resolve(getLinkObject(res));
-    }
-  );
-}
-
-function getLinkObject(response) {
-  return {
-    data: response.data._embedded.records,
-    next: function () {
-      return getLink(`${SEBAK_API_BASE}${response.data._links.next.href}`);
-    },
-    previous: function () {
-      return getLink(`${SEBAK_API_BASE}${response.data._links.prev.href}`);
-    }
-  }
+  return axios.get(`${SEBAK_API_BASE}${endpoint}`);
 }

@@ -17,14 +17,8 @@ function getTransactions(params = {}) {
   return new Promise(
     async function (resolve, reject) {
       try {
-        const transactions = (await sebakApi.getTransactions(params)).data;
-        const data = [];
-
-        for (const transaction of transactions) {
-          data.push(sebakTransformer.transformTransaction(transaction));
-        }
-
-        resolve(data);
+        const transactions = (await sebakApi.getTransactions(params));
+        resolve(getTransactionsObject(transactions));
       } catch (error) {
         reject(error);
       }
@@ -100,7 +94,7 @@ export function getOperations(params = {}) {
   return new Promise(
     async function (resolve, reject) {
       try {
-        const transactions = (await sebakApi.getTransactions(params)).data;
+        const transactions = (await getTransactions(params)).data;
         const data = [];
 
         transactionsLoop:
@@ -142,4 +136,22 @@ export function getNetInformation() {
 
 function getRecords(response) {
   return response.data._embedded.records;
+}
+
+function getTransactionsObject(response) {
+  const data = [];
+
+  for (const transaction of response.data._embedded.records) {
+    data.push(sebakTransformer.transformTransaction(transaction));
+  }
+
+  return {
+    data,
+    next: async function () {
+      return getTransactionsObject(await sebakApi.getLink(`${response.data._links.next.href}`));
+    },
+    previous: async function () {
+      return getTransactionsObject(await sebakApi.getLink(`${response.data._links.prev.href}`));
+    }
+  }
 }
