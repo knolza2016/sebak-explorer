@@ -134,3 +134,15 @@ body {
   color: #0A98BF;
   align-self: center;
 }
+
+.flex {
+  display: flex;
+  flex-direction: column;
+}
+
+.paginator {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 25px;
+}
