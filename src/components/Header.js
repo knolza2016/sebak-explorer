@@ -19,6 +19,9 @@ class Header extends Component {
         </label>
         <ul className="navbar__menu">
           <li>
+            <Link to={`/blocks`}>Blocks</Link>
+          </li>
+          <li>
             <Link to={`/transactions`}>Transactions</Link>
           </li>
           <li>
