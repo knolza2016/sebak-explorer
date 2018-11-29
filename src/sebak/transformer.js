@@ -2,7 +2,8 @@ const sebakTransformer = {
   transformTransaction,
   transformAccount,
   transformOperation,
-  transformBlock
+  transformBlock,
+  transformFrozenAccount
 }
 
 export default sebakTransformer;
@@ -42,5 +43,17 @@ function transformBlock(block) {
     hash: block.hash,
     height: block.height,
     date: block.confirmed
+  };
+}
+
+function transformFrozenAccount(frozenAccount) {
+  return {
+    freezeBlockHeight: frozenAccount.create_block_height,
+    unfreezingBlockHeight: frozenAccount.unfreezing_block_height,
+    unfreezingRemainingBlocks: frozenAccount.unfreezing_remaining_blocks,
+    amount: frozenAccount.amount / currencyDivisor,
+    address: frozenAccount.address,
+    parentAddress: frozenAccount.linked,
+    state: frozenAccount.state
   };
 }

@@ -11,6 +11,7 @@ const sebakService = {
   getNetInformation,
   getBlocks,
   getBlock,
+  getFrozenAccounts,
 }
 
 export default sebakService;
@@ -162,6 +163,19 @@ function getBlock(blockHash, params = {}) {
   );
 }
 
+function getFrozenAccounts(params = {}) {
+  return new Promise(
+    async function (resolve, reject) {
+      try {
+        const frozenAccounts = (await sebakApi.getFrozenAccounts(params));
+        resolve(getFrozenAccountsObject(frozenAccounts));
+      } catch (error) {
+        reject(error);
+      }
+    }
+  );
+}
+
 function getRecords(response) {
   return response.data._embedded.records;
 }
@@ -198,6 +212,24 @@ function getBlocksObject(response) {
     },
     previous: async function () {
       return getBlocksObject(await sebakApi.getLink(`${response.data._links.prev.href}`));
+    }
+  }
+}
+
+function getFrozenAccountsObject(response) {
+  const data = [];
+
+  for (const frozenAccount of response.data._embedded.records) {
+    data.push(sebakTransformer.transformFrozenAccount(frozenAccount));
+  }
+
+  return {
+    data,
+    next: async function () {
+      return getFrozenAccountsObject(await sebakApi.getLink(`${response.data._links.next.href}`));
+    },
+    previous: async function () {
+      return getFrozenAccountsObject(await sebakApi.getLink(`${response.data._links.prev.href}`));
     }
   }
 }
