@@ -1,0 +1,12 @@
+.output-text {
+  word-wrap: break-word;
+  margin-bottom: 25px;
+}
+
+.output-text:last-of-type {
+  margin-bottom: 0;
+}
+
+.output-text .label {
+  font-weight: 600;
+}
