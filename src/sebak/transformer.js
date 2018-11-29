@@ -27,6 +27,7 @@ function transformAccount(account) {
 function transformOperation(operation) {
   return {
     hash: operation.hash,
+    transaction_hash: operation.tx_hash,
     source: operation.source,
     target: operation.body.target,
     type: operation.type,
