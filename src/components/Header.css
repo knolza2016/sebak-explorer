@@ -1,36 +1,111 @@
-.header {
-  background-color: #133153;
+.navbar {
   color: #ffffff;
+  background-color: #133153;
   display: flex;
   flex-flow: row wrap;
-  height: 70px;
+  height: 75px;
   position: fixed;
   top: 0;
   width: 100%;
   font-size: 1rem;
 }
 
-.header .brand {
-  margin: 0 50px;
-  height: 70px;
-}
-
-.header .brand img {
-  height: 45px;
-}
-
-.header a {
+.navbar a {
   text-decoration: none;
   display: flex;
   color: #fff;
   align-items: center;
 }
 
-.header .menu li {
-  display: inline-block;
+.navbar__highlight {
+  color: #0A98BF;
 }
 
-.header .menu li a {
-  height: 70px;
-  padding: 0 25px 0 0;
+.navbar .brand {
+  margin: 0 25px;
+  height: 75px;
+}
+
+.navbar .brand a {
+  height: 75px;
+}
+
+.navbar .brand img {
+  height: 48px;
+}
+
+.navbar__hamburger {
+  display: none;
+}
+
+.navbar__hamburger+label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-left: auto;
+  height: 75px;
+  margin-right: 25px;
+  font-size: 1.3rem;
+}
+
+.navbar__hamburger:checked~.navbar__menu {
+  visibility: visible;
+}
+
+.navbar__menu {
+  visibility: hidden;
+  background-color: #133153;
+  padding: 10px 0;
+  width: 100%;
+  border-top: 1px solid #0A98BF;
+}
+
+.navbar__menu li {
+  list-style-type: none;
+  display: block;
+}
+
+.navbar__menu li a {
+  padding: 5px 25px;
+  cursor: pointer;
+  transition: color 0.3s;
+  text-decoration: none;
+  align-content: center;
+}
+
+.navbar__menu li a:hover,
+.navbar__menu li a.active {
+  color: #0A98BF;
+}
+
+@media screen and (min-width: 64em) {
+  .navbar .brand {
+    margin: 0 50px;
+    height: 75px;
+  }
+
+  .navbar__hamburger {
+    visibility: hidden;
+  }
+
+  .navbar__hamburger+label {
+    display: none;
+  }
+
+  .navbar__menu {
+    margin-left: auto;
+    visibility: visible;
+    padding: 0;
+    width: auto;
+    border: none;
+  }
+
+  .navbar__menu li {
+    display: inline-block;
+  }
+
+  .navbar__menu li a {
+    height: 75px;
+    padding: 0 50px 0 0;
+  }
 }

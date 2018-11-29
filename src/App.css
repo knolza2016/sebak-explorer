@@ -16,14 +16,14 @@ body {
 }
 
 .container {
-  margin: 120px 50px 50px 50px;
-  width: calc(100% - 100px)
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 95px;
+  flex: 1 0 auto;
+  width: calc(100% - 50px);
 }
 
 .content {
-  margin-right: auto;
-  margin-left: auto;
-  width: 1200px;
   display: flex;
   flex-direction: column;
 }
@@ -145,4 +145,22 @@ body {
   flex-direction: row;
   justify-content: space-between;
   margin-top: 25px;
+}
+
+@media screen and (min-width: 64em) {
+  .container {
+    margin: 120px 50px 50px 50px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 960px;
+  }
+}
+
+@media screen and (min-width: 96em) {
+  .container {
+    margin: 120px 50px 50px 50px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 1200px;
+  }
 }
