@@ -80,7 +80,7 @@
 
 @media screen and (min-width: 64em) {
   .navbar .brand {
-    margin: 0 50px;
+    margin: 0 25px;
     height: 75px;
   }
 
@@ -106,6 +106,6 @@
 
   .navbar__menu li a {
     height: 75px;
-    padding: 0 50px 0 0;
+    padding: 0 25px 0 0;
   }
 }
