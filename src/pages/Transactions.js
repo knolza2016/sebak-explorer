@@ -1,10 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import dateFormatter from '../util/formatters/date.formatter';
+import stringFormatter from '../util/formatters/string.formatter';
 import sebakService from '../sebak/service';
 import Card from '../components/Card';
 import LoadingIndicator from '../components/LoadingIndicator';
 import ActionButton from '../components/ActionButton';
+import MediaQuery from 'react-responsive';
 
 class Transactions extends Component {
   constructor(props) {
@@ -64,30 +66,43 @@ class Transactions extends Component {
         {
           this.state.transactions.data.length > 0 &&
           <Fragment>
-            <table className="table">
+              <table className="table">
               <tbody>
-                <tr className="table__header">
-                  <th className="table__item" width="70%">Hash</th>
-                  <th className="table__item" width="20%">Date</th>
-                  <th className="table__item  table__number" width="10%">Operations</th>
-                </tr>
-                {this.state.transactions.data.map((transaction) => (
-                  <tr className="table__content" key={transaction.hash}>
-                    <td className="table__item">
-                      <Link to={`/transactions/${transaction.hash}`} className="table__link">
-                        {transaction.hash}
-                      </Link>
-                    </td>
-                    <td className="table__item">{dateFormatter.formatAsDatetime(transaction.date)}</td>
-                    <td className="table__item table__number">{transaction.operationCount}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <div className="paginator">
-              { this.state.currentPage > 0 && <ActionButton onClick={this.previousPage}>Previous page</ActionButton> }
-              <ActionButton onClick={this.nextPage} style={this.state.currentPage === 0 ? {marginLeft: 'auto'} : {} }>Next page</ActionButton>
-            </div>
+                <MediaQuery maxWidth={768}>
+                    {this.state.transactions.data.map((transaction) => (
+                      <tr className="table__content" key={transaction.hash}>
+                        <td className="table__item">
+                            <Link to={`/transactions/${transaction.hash}`} className="link">
+                              {stringFormatter.truncate(transaction.hash, 10, '...')}
+                            </Link> confirmed {transaction.operationCount} operations on {dateFormatter.formatAsDatetime(transaction.date)}
+                        </td>
+                      </tr>
+                    ))}
+                  </MediaQuery>
+                  <MediaQuery minWidth={769}>
+                      <tr className="table__header">
+                        <th className="table__item">Hash</th>
+                        <th className="table__item" width="200px">Date</th>
+                        <th className="table__item" width="100px">Operations</th>
+                      </tr>
+                      {this.state.transactions.data.map((transaction) => (
+                        <tr className="table__content" key={transaction.hash}>
+                          <td className="table__item">
+                            <Link to={`/transactions/${transaction.hash}`} className="link">
+                              {transaction.hash}
+                            </Link>
+                          </td>
+                          <td className="table__item">{dateFormatter.formatAsDatetime(transaction.date)}</td>
+                          <td className="table__item">{transaction.operationCount}</td>
+                        </tr>
+                      ))}
+                  </MediaQuery>
+                </tbody>
+              </table>
+              <div className="paginator">
+                { this.state.currentPage > 0 && <ActionButton onClick={this.previousPage}>Previous page</ActionButton> }
+                <ActionButton onClick={this.nextPage} style={this.state.currentPage === 0 ? {marginLeft: 'auto'} : {} }>Next page</ActionButton>
+              </div>
           </Fragment>
         }
       </Card>

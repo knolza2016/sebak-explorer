@@ -58,15 +58,6 @@ body {
   vertical-align: top;
 }
 
-.table__link {
-  color: #0A98BF;
-  text-decoration: none;
-}
-
-.table__link:hover {
-  text-decoration: underline;
-}
-
 .table__number {
   text-align: right;
 }
@@ -145,6 +136,15 @@ body {
   flex-direction: row;
   justify-content: space-between;
   margin-top: 25px;
+}
+
+.link {
+  color: #0A98BF;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
 }
 
 @media screen and (min-width: 1224px) {

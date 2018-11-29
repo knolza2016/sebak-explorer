@@ -36,12 +36,12 @@ class OperationsTable extends Component {
                 {stringFormatter.truncate(operation.hash, 10, '...')}
               </td>
               <td className="table__item">
-                <Link to={`/accounts/${operation.source}`} className="table__link">
+                <Link to={`/accounts/${operation.source}`} className="link">
                   {stringFormatter.truncate(operation.source, 15, '...')}
                 </Link>
               </td>
               <td className="table__item">
-                <Link to={`/accounts/${operation.target}`} className="table__link">
+                <Link to={`/accounts/${operation.target}`} className="link">
                   {stringFormatter.truncate(operation.target, 15, '...')}
                 </Link>
               </td>
