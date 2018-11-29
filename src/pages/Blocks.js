@@ -72,7 +72,9 @@ class Blocks extends Component {
                     {this.state.blocks.data.map((block) => (
                       <tr className="table__content" key={block.hash}>
                         <td className="table__item">
-                          Height {block.height} confirmed by {stringFormatter.truncate(block.hash, 10, '...')} on {dateFormatter.formatAsDatetime(block.date)}
+                          Height {block.height} confirmed by <Link to={`/blocks/${block.hash}`} className="link">
+                            {stringFormatter.truncate(block.hash, 10, '...')}
+                          </Link> on {dateFormatter.formatAsDatetime(block.date)}
                         </td>
                       </tr>
                     ))}
@@ -86,7 +88,9 @@ class Blocks extends Component {
                       {this.state.blocks.data.map((block) => (
                         <tr className="table__content" key={block.hash}>
                           <td className="table__item">
-                            {stringFormatter.truncate(block.hash, 10, '...')}
+                            <Link to={`/blocks/${block.hash}`} className="link">
+                              {stringFormatter.truncate(block.hash, 10, '...')}
+                            </Link>
                           </td>
                           <td className="table__item">{block.height}</td>
                           <td className="table__item">{dateFormatter.formatAsDatetime(block.date)}</td>

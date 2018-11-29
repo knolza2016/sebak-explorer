@@ -7,6 +7,7 @@ import Operations from "./pages/Operations";
 import Account from "./pages/Account";
 import NotFound from "./pages/NotFound";
 import Blocks from "./pages/Blocks";
+import Block from './pages/Block';
 
 class Router extends Component {
   render() {
@@ -18,6 +19,9 @@ class Router extends Component {
           }}/>/>
           <Route path="/transactions/" component={Transactions}/>
           <Route path="/operations" component={Operations}/>
+          <Route path="/blocks/:hash" render={props => {
+            return <Block {...props} key={props.match.params.hash}/>
+          }}/>
           <Route path="/blocks" component={Blocks}/>
           <Route path="/accounts/:publicKey" render={props => {
             return <Account {...props} key={props.match.params.publicKey}/>
