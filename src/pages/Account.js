@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import sebakService from '../sebak/service';
 import Card from '../components/Card';
 import OperationsTable from '../components/OperationsTable';
 import LoadingIndicator from '../components/LoadingIndicator';
+import OutputText from '../components/OutputText';
 import NotFound from '../pages/NotFound';
 import UnexpectedError from '../pages/UnexpectedError';
 
@@ -73,11 +74,16 @@ class Account extends Component {
           }
           {
             this.state.account.address &&
-            <div>
-              Public key: {this.state.account.address}
-              <br/>
-              Balance: {this.state.account.balance}
-            </div>
+            <Fragment>
+              <OutputText
+                label="Public key"
+                value={this.state.account.address}
+              />
+              <OutputText
+                label="Balance"
+                value={`${this.state.account.balance} BOS`}
+              />
+            </Fragment>
           }
         </Card>
         <Card title="Operations">
