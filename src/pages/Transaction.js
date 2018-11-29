@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import sebakService from '../sebak/service';
 import Card from '../components/Card';
 import OperationsTable from '../components/OperationsTable';
 import LoadingIndicator from '../components/LoadingIndicator';
+import OutputText from '../components/OutputText';
 import dateFormatter from '../util/formatters/date.formatter';
 import NotFound from '../pages/NotFound';
 
@@ -51,7 +52,7 @@ class Transaction extends Component {
     }
 
     return (
-      <React.Fragment>
+      <Fragment>
         <Card title="Transaction">
           {
             !this.state.transaction.hash &&
@@ -59,13 +60,20 @@ class Transaction extends Component {
           }
           {
             this.state.transaction.hash &&
-            <div>
-              Hash: {this.state.transaction.hash}
-              <br/>
-              Date: {dateFormatter.formatAsDatetime(this.state.transaction.date)}
-              <br/>
-              Block: {this.state.transaction.block}
-            </div>
+            <Fragment>
+              <OutputText
+                label="Hash"
+                value={this.state.transaction.hash}
+              />
+              <OutputText
+                label="Block"
+                value={this.state.transaction.block}
+              />
+              <OutputText
+                label="Date"
+                value={dateFormatter.formatAsDatetime(this.state.transaction.date)}
+              />
+            </Fragment>
           }
         </Card>
         <Card title="Operations">
@@ -78,7 +86,7 @@ class Transaction extends Component {
             <OperationsTable operations={this.state.transaction.operations}></OperationsTable>
           }
         </Card>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }
