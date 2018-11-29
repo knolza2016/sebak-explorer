@@ -8,6 +8,8 @@ const sebakApi = {
   getTransaction,
   getOperationsForTransaction,
   getNetInformation,
+  getBlocks,
+  getBlock,
   getLink
 }
 
@@ -57,6 +59,20 @@ function getTransaction(transactionHash, params = {}) {
 function getOperationsForTransaction(transactionHash, params = {}) {
   // todo make API smart based on _links content
   return axios.get(`${SEBAK_API_BASE}/api/v1/transactions/${transactionHash}/operations`, {
+    params: params
+  })
+}
+
+function getBlocks(params = {}) {
+  // todo make API smart based on _links content
+  return axios.get(`${SEBAK_API_BASE}/api/v1/blocks`, {
+    params: params
+  })
+}
+
+function getBlock(blockHash, params = {}) {
+  // todo make API smart based on _links content
+  return axios.get(`${SEBAK_API_BASE}/api/v1/blocks/${blockHash}`, {
     params: params
   })
 }

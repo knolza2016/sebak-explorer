@@ -1,7 +1,8 @@
 const sebakTransformer = {
   transformTransaction,
   transformAccount,
-  transformOperation
+  transformOperation,
+  transformBlock
 }
 
 export default sebakTransformer;
@@ -33,5 +34,13 @@ function transformOperation(operation) {
     type: operation.type,
     date: operation.confirmed,
     amount: operation.body.amount / currencyDivisor
+  };
+}
+
+function transformBlock(block) {
+  return {
+    hash: block.hash,
+    height: block.height,
+    date: block.confirmed
   };
 }

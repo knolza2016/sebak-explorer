@@ -8,7 +8,9 @@ const sebakService = {
   getOperations,
   getOperationsForAccount,
   getOperationsForTransaction,
-  getNetInformation
+  getNetInformation,
+  getBlocks,
+  getBlock,
 }
 
 export default sebakService;
@@ -134,6 +136,32 @@ export function getNetInformation() {
   );
 }
 
+function getBlocks(params = {}) {
+  return new Promise(
+    async function (resolve, reject) {
+      try {
+        const blocks = (await sebakApi.getBlocks(params));
+        resolve(getBlocksObject(blocks));
+      } catch (error) {
+        reject(error);
+      }
+    }
+  );
+}
+
+function getBlock(blockHash, params = {}) {
+  return new Promise(
+    async function (resolve, reject) {
+      try {
+        const response = await sebakApi.getBlock(blockHash, params);
+        resolve(sebakTransformer.transformBlock(response.data));
+      } catch (error) {
+        reject(error);
+      }
+    }
+  );
+}
+
 function getRecords(response) {
   return response.data._embedded.records;
 }
@@ -152,6 +180,24 @@ function getTransactionsObject(response) {
     },
     previous: async function () {
       return getTransactionsObject(await sebakApi.getLink(`${response.data._links.prev.href}`));
+    }
+  }
+}
+
+function getBlocksObject(response) {
+  const data = [];
+
+  for (const block of response.data._embedded.records) {
+    data.push(sebakTransformer.transformBlock(block));
+  }
+
+  return {
+    data,
+    next: async function () {
+      return getBlocksObject(await sebakApi.getLink(`${response.data._links.next.href}`));
+    },
+    previous: async function () {
+      return getBlocksObject(await sebakApi.getLink(`${response.data._links.prev.href}`));
     }
   }
 }
