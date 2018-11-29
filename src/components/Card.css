@@ -5,6 +5,7 @@
   box-sizing: border-box;
   overflow: hidden;
   margin-bottom: 25px;
+  word-wrap: break-word;
 }
 
 .card__title {
