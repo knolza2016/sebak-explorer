@@ -27,6 +27,9 @@ class Header extends Component {
           <li>
             <Link to={`/operations`}>Operations</Link>
           </li>
+          <li>
+            <Link to={`/freezing`}>Freezing</Link>
+          </li>
         </ul>
       </nav>
     );
