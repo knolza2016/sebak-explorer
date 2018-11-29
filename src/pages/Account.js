@@ -4,6 +4,7 @@ import Card from '../components/Card';
 import OperationsTable from '../components/OperationsTable';
 import LoadingIndicator from '../components/LoadingIndicator';
 import NotFound from '../pages/NotFound';
+import UnexpectedError from '../pages/UnexpectedError';
 
 class Account extends Component {
   constructor(props) {
@@ -43,15 +44,24 @@ class Account extends Component {
     }));
   }
   showErrorPage = error => {
-    if (error.response.status !== 200) {
+    if (error.response && error.response.status !== 200) {
       this.setState({
         notFound: true
+      });
+    } else {
+      this.setState({
+        notFound: true,
+        error: true
       });
     }
   }
   render() {
     if(this.state.notFound) {
       return <NotFound/>
+    }
+
+    if(this.state.error) {
+      return <UnexpectedError/>
     }
 
     return (
