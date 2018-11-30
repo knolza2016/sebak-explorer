@@ -5,5 +5,9 @@ const stringFormatter = {
 export default stringFormatter;
 
 function truncate(string, amount, postfix = '') {
-  return string.substring(0, amount) + postfix;
+  if(string) {
+    return string.substring(0, amount) + postfix;
+  }
+
+  return string;
 }
