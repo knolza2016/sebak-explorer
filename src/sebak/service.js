@@ -126,10 +126,7 @@ export function getNetInformation() {
     async function (resolve, reject) {
       try {
         const netInformation = await sebakApi.getNetInformation();
-
-        // todo transform data
-
-        resolve(netInformation);
+        resolve(getNetInformationObject(netInformation));
       } catch (error) {
         reject(error);
       }
@@ -141,7 +138,7 @@ function getBlocks(params = {}) {
   return new Promise(
     async function (resolve, reject) {
       try {
-        const blocks = (await sebakApi.getBlocks(params));
+        const blocks = await sebakApi.getBlocks(params);
         resolve(getBlocksObject(blocks));
       } catch (error) {
         reject(error);
@@ -167,7 +164,7 @@ function getFrozenAccounts(params = {}) {
   return new Promise(
     async function (resolve, reject) {
       try {
-        const frozenAccounts = (await sebakApi.getFrozenAccounts(params));
+        const frozenAccounts = await sebakApi.getFrozenAccounts(params);
         resolve(getFrozenAccountsObject(frozenAccounts));
       } catch (error) {
         reject(error);
@@ -231,5 +228,11 @@ function getFrozenAccountsObject(response) {
     previous: async function () {
       return getFrozenAccountsObject(await sebakApi.getLink(`${response.data._links.prev.href}`));
     }
+  }
+}
+
+function getNetInformationObject(response) {
+  return {
+    data: sebakTransformer.transformNetInformation(response.data)
   }
 }

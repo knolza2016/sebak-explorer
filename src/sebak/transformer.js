@@ -3,7 +3,8 @@ const sebakTransformer = {
   transformAccount,
   transformOperation,
   transformBlock,
-  transformFrozenAccount
+  transformFrozenAccount,
+  transformNetInformation
 }
 
 export default sebakTransformer;
@@ -55,5 +56,16 @@ function transformFrozenAccount(frozenAccount) {
     address: frozenAccount.address,
     parentAddress: frozenAccount.linked,
     state: frozenAccount.state
+  };
+}
+
+function transformNetInformation(netInformation) {
+  return {
+    version: netInformation.node.version['version'],
+    buildDate: netInformation.node.version['build-date'],
+    currentBlockHeight: netInformation.block.height,
+    currentBlockHash: netInformation.block.hash,
+    totalTransactions: netInformation.block['total-txs'],
+    totalOperations: netInformation.block['total-ops']
   };
 }
