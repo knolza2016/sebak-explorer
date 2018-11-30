@@ -128,7 +128,7 @@ class OperationsTable extends Component {
                 </td>
                 <td className="table__item">{this.getFormattedType(operation.type)}</td>
                 <td className="table__item">{dateFormatter.formatAsDatetime(operation.date)}</td>
-                <td className="table__item table__number">{operation.amount ? `${operation.amount} BOS` : ''}</td>
+                <td className="table__item table__number">{isNaN(operation.amount) ? '' : `${operation.amount} BOS`}</td>
               </tr>
             ))}
           </MediaQuery>
