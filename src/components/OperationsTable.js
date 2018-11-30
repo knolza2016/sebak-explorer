@@ -15,6 +15,8 @@ class OperationsTable extends Component {
         return 'Collect transaction fee'
       case 'inflation':
         return "Inflation"
+      case 'unfreezing-request':
+        return "Unfreezing request"
       default:
         return type;
     }
@@ -69,6 +71,16 @@ class OperationsTable extends Component {
             </Link> on {dateFormatter.formatAsDatetime(operation.date)}
           </Fragment>
         )
+      case 'unfreezing-request':
+        return (
+          <Fragment>
+            <Link to={`/accounts/${operation.source}`} className="link">
+              {stringFormatter.truncate(operation.source, 10, '...')}
+            </Link> requested unfreezing in transaction <Link to={`/transactions/${operation.transaction_hash}`} className="link">
+              {stringFormatter.truncate(operation.transaction_hash, 10, '...')}
+            </Link> on {dateFormatter.formatAsDatetime(operation.date)}
+          </Fragment>
+        )
       default:
         return operation.type;
     }
@@ -116,7 +128,7 @@ class OperationsTable extends Component {
                 </td>
                 <td className="table__item">{this.getFormattedType(operation.type)}</td>
                 <td className="table__item">{dateFormatter.formatAsDatetime(operation.date)}</td>
-                <td className="table__item table__number">{operation.amount} BOS</td>
+                <td className="table__item table__number">{operation.amount ? `${operation.amount} BOS` : ''}</td>
               </tr>
             ))}
           </MediaQuery>
