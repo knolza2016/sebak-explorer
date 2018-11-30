@@ -9,7 +9,7 @@ class OutputText extends Component {
           {this.props.label}
         </div>
         <div className="output-text">
-          {this.props.value}
+          {this.props.value || this.props.children}
         </div>
       </div>
     )
