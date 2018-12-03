@@ -6,22 +6,22 @@ import OutputText from '../components/OutputText';
 import dateFormatter from '../util/formatters/date.formatter';
 import NotFound from '../pages/NotFound';
 import UnexpectedError from './UnexpectedError';
+import TransactionsTable from '../components/TransactionsTable';
 
 class Block extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      block: {
-      }
-    }
+  state = {
+    block: undefined,
+    transactions: undefined
   }
-  async componentDidMount() {
+  componentDidMount() {
     const { hash } = this.props.match.params;
 
     // todo show confirmed transations for block
 
     sebakService.getBlock(hash)
       .then(this.setBlockOnState)
+      .then(block => sebakService.getTransaction(block.proposerTransactionHash))
+      .then(this.setTransactionsOnState)
       .catch(this.showErrorPage);
   }
   setBlockOnState = block => {
@@ -30,6 +30,13 @@ class Block extends Component {
     });
 
     return block;
+  }
+  setTransactionsOnState = transaction => {
+    this.setState({
+      transactions: {
+        data: [transaction]
+      }
+    });
   }
   showErrorPage = error => {
     let state = {};
@@ -55,11 +62,11 @@ class Block extends Component {
       <Fragment>
         <Card title="Block">
           {
-            !this.state.block.hash &&
+            !this.state.block &&
             <LoadingIndicator/>
           }
           {
-            this.state.block.hash &&
+            this.state.block &&
             <Fragment>
               <OutputText
                 label="Hash"
@@ -75,6 +82,9 @@ class Block extends Component {
               />
             </Fragment>
           }
+        </Card>
+        <Card title="Transactions">
+          <TransactionsTable transactions={this.state.transactions}/>
         </Card>
       </Fragment>
     );

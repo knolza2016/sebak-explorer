@@ -43,7 +43,8 @@ function transformBlock(block) {
   return {
     hash: block.hash,
     height: block.height,
-    date: block.confirmed
+    date: block.confirmed,
+    proposerTransactionHash: block.proposer_transaction
   };
 }
 
