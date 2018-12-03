@@ -92,7 +92,11 @@ class Blocks extends Component {
                               {stringFormatter.truncate(block.hash, 10, '...')}
                             </Link>
                           </td>
-                          <td className="table__item">{block.height}</td>
+                          <td className="table__item">
+                            <Link to={`/blocks/${block.height}`} className="link">
+                              {block.height}
+                            </Link>
+                          </td>
                           <td className="table__item">{dateFormatter.formatAsDatetime(block.date)}</td>
                         </tr>
                       ))}
