@@ -16,8 +16,6 @@ class Block extends Component {
   componentDidMount() {
     const { hash } = this.props.match.params;
 
-    // todo show confirmed transations for block
-
     sebakService.getBlock(hash)
       .then(this.setBlockOnState)
       .then(block => sebakService.getTransaction(block.proposerTransactionHash))
