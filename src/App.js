@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import './App.css';
 import Header from './components/Header';
 import Card from './components/Card';
-import { withRouter } from 'react-router-dom'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faCircleNotch, faBars } from '@fortawesome/free-solid-svg-icons'
+import { withRouter } from 'react-router-dom';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faCircleNotch, faBars } from '@fortawesome/free-solid-svg-icons';
 import Router from "./Router";
-import "babel-polyfill"
+import "babel-polyfill";
 
 library.add(faSearch, faCircleNotch, faBars)
 
@@ -26,6 +26,10 @@ class App extends Component {
   }
   handleLookup = () => {
     const route = this.getRoute();
+
+    this.setState({
+      identifier: ''
+    });
 
     if (route) {
       this.props.history.push(this.getRoute())
