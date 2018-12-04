@@ -8,12 +8,9 @@ import NotFound from '../pages/NotFound';
 import UnexpectedError from '../pages/UnexpectedError';
 
 class Account extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      account: {
-      }
-    }
+  state = {
+    account: undefined,
+    operations: undefined
   }
   componentDidMount() {
     const { publicKey } = this.props.match.params;
@@ -31,18 +28,15 @@ class Account extends Component {
       .then(this.setOperationsOnState)
       .catch(this.showErrorPage);
   }
-  setAccountOnState = res => {
+  setAccountOnState = account => {
     this.setState({
-      account: res
+      account
     });
   }
-  setOperationsOnState = res => {
-    this.setState(previousState => ({
-      account: {
-        ...previousState.account,
-        operations: res
-      }
-    }));
+  setOperationsOnState = operations => {
+    this.setState({
+      operations
+    });
   }
   showErrorPage = error => {
     if (error.response && error.response.status !== 200) {
@@ -57,46 +51,48 @@ class Account extends Component {
     }
   }
   render() {
-    if(this.state.notFound) {
+    const { notFound, error, account, operations } = this.state;
+
+    if(notFound) {
       return <NotFound/>
     }
 
-    if(this.state.error) {
+    if(error) {
       return <UnexpectedError/>
     }
 
     return (
-      <React.Fragment>
+      <Fragment>
         <Card title="Account">
           {
-            !this.state.account.address &&
+            !account &&
             <LoadingIndicator/>
           }
           {
-            this.state.account.address &&
+            account &&
             <Fragment>
               <OutputText
                 label="Public key"
-                value={this.state.account.address}
+                value={account.address}
               />
               <OutputText
                 label="Balance"
-                value={`${this.state.account.balance} BOS`}
+                value={`${account.balance} BOS`}
               />
             </Fragment>
           }
         </Card>
         <Card title="Operations">
           {
-            !this.state.account.operations &&
+            !operations &&
             <LoadingIndicator/>
           }
           {
-            this.state.account.operations &&
-            <OperationsTable operations={this.state.account.operations}></OperationsTable>
+            operations &&
+            <OperationsTable operations={operations}/>
           }
         </Card>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }
