@@ -11,6 +11,7 @@ const sebakApi = {
   getBlocks,
   getBlock,
   getFrozenAccounts,
+  getFrozenAccountsForAccount,
   getLink
 }
 
@@ -68,6 +69,12 @@ function getBlock(blockHash, params = {}) {
 
 function getFrozenAccounts(params = {}) {
   return axios.get(`${SEBAK_API_BASE}/api/v1/frozen-accounts`, {
+    params: params
+  })
+}
+
+function getFrozenAccountsForAccount(publicKey, params = {}) {
+  return axios.get(`${SEBAK_API_BASE}/api/v1/accounts/${publicKey}/frozen-accounts`, {
     params: params
   })
 }

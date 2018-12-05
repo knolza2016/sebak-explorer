@@ -12,6 +12,8 @@ const sebakService = {
   getBlocks,
   getBlock,
   getFrozenAccounts,
+  getFrozenAccountsForAccount,
+  calculateInflation
 }
 
 export default sebakService;
@@ -173,6 +175,19 @@ function getFrozenAccounts(params = {}) {
   );
 }
 
+function getFrozenAccountsForAccount(publicKey, params = {}) {
+  return new Promise(
+    async function (resolve, reject) {
+      try {
+        const frozenAccounts = await sebakApi.getFrozenAccountsForAccount(publicKey, params);
+        resolve(getFrozenAccountsObject(frozenAccounts));
+      } catch (error) {
+        reject(error);
+      }
+    }
+  );
+}
+
 function getRecords(response) {
   return response.data._embedded.records;
 }
@@ -214,6 +229,12 @@ function getBlocksObject(response) {
 }
 
 function getFrozenAccountsObject(response) {
+  if(!response.data._embedded.records) {
+    return {
+      data: []
+    }
+  }
+
   const data = [];
 
   for (const frozenAccount of response.data._embedded.records) {
