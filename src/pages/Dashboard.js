@@ -49,6 +49,9 @@ class Dashboard extends Component {
                 {netInformation.totalOperations}
               </Link>
             </OutputText>
+            <OutputText label="Total supply">
+              {netInformation.supply} BOS
+            </OutputText>
           </Fragment>
         }
       </Card>
