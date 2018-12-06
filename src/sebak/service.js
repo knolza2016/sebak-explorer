@@ -12,8 +12,7 @@ const sebakService = {
   getBlocks,
   getBlock,
   getFrozenAccounts,
-  getFrozenAccountsForAccount,
-  calculateInflation
+  getFrozenAccountsForAccount
 }
 
 export default sebakService;
@@ -188,6 +187,32 @@ function getFrozenAccountsForAccount(publicKey, params = {}) {
   );
 }
 
+function calculateInflation(currentBlockHeight, startBlockHeight, duration, inflation) {
+  if (currentBlockHeight > startBlockHeight + duration) {
+    return inflation * duration;
+  } else if (currentBlockHeight > startBlockHeight) {
+    return inflation * (currentBlockHeight - startBlockHeight);
+  } else return 0;
+}
+
+function calculateCommonsBudgetInflation(currentBlockHeight) {
+  return calculateInflation(currentBlockHeight, 1, 36000000, 50);
+}
+
+function calculatePF00Inflation(currentBlockHeight) {
+  // todo set start block height once known
+  return calculateInflation(currentBlockHeight, undefined, 6307200, 25.5);
+}
+
+function getSupply(currentBlockHeight) {
+  let initialSupply = 500000000;
+
+  initialSupply += calculateCommonsBudgetInflation(currentBlockHeight);
+  initialSupply += calculatePF00Inflation(currentBlockHeight);
+
+  return initialSupply;
+}
+
 function getRecords(response) {
   return response.data._embedded.records;
 }
@@ -229,7 +254,7 @@ function getBlocksObject(response) {
 }
 
 function getFrozenAccountsObject(response) {
-  if(!response.data._embedded.records) {
+  if (!response.data._embedded.records) {
     return {
       data: []
     }
@@ -253,7 +278,11 @@ function getFrozenAccountsObject(response) {
 }
 
 function getNetInformationObject(response) {
+  const netInformation = sebakTransformer.transformNetInformation(response.data);
   return {
-    data: sebakTransformer.transformNetInformation(response.data)
+    data: {
+      ...netInformation,
+      supply: getSupply(netInformation.currentBlockHeight)
+    }
   }
 }
