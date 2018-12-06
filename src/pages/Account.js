@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import sebakService from '../sebak/service';
 import Card from '../components/Card';
 import OperationsTable from '../components/OperationsTable';
@@ -6,27 +7,40 @@ import LoadingIndicator from '../components/LoadingIndicator';
 import OutputText from '../components/OutputText';
 import NotFound from '../pages/NotFound';
 import UnexpectedError from '../pages/UnexpectedError';
+import stringFormatter from '../util/formatters/string.formatter';
+import MediaQuery from 'react-responsive';
 
 class Account extends Component {
   state = {
     account: undefined,
-    operations: undefined
+    operations: undefined,
+    frozenAccounts: undefined
   }
   componentDidMount() {
     const { publicKey } = this.props.match.params;
 
-    sebakService
-      .getAccount(publicKey)
-      .then(this.setAccountOnState)
-      .catch(this.showErrorPage);
-
-    sebakService
-      .getOperationsForAccount(publicKey, {
+    Promise.all([
+      sebakService.getAccount(publicKey),
+      sebakService.getOperationsForAccount(publicKey, {
         reverse: true,
         limit: 100
+      }),
+      sebakService.getFrozenAccountsForAccount(publicKey, {
+        reverse: true,
+        limit: 100 // todo reduce this once _links cursor is fixed
       })
-      .then(this.setOperationsOnState)
-      .catch(this.showErrorPage);
+    ]).then(async res => {
+      let account = res[0];
+      let operations = res[1];
+      let frozenAccounts = res[2];
+
+      account.balance += frozenAccounts.data.reduce((acc, frozenAccount) => { return acc + frozenAccount.amount }, 0);
+
+      this.setAccountOnState(account)
+      this.setOperationsOnState(operations)
+      this.setFrozenAccountsOnState(frozenAccounts)
+    })
+    .catch(this.showErrorPage);
   }
   setAccountOnState = account => {
     this.setState({
@@ -36,6 +50,11 @@ class Account extends Component {
   setOperationsOnState = operations => {
     this.setState({
       operations
+    });
+  }
+  setFrozenAccountsOnState = frozenAccounts => {
+    this.setState({
+      frozenAccounts
     });
   }
   showErrorPage = error => {
@@ -50,14 +69,64 @@ class Account extends Component {
       });
     }
   }
+  getFormattedFrozenAccountState(frozenAccount) {
+    // todo verify state options
+    switch(frozenAccount.state) {
+      case 'frozen':
+        return (
+          <Fragment>
+            Frozen in block <Link to={`/blocks/${frozenAccount.freezeBlockHeight}`} className="link">
+              {frozenAccount.freezeBlockHeight}
+            </Link>
+          </Fragment>
+        )
+      case 'melting':
+        return (
+          <Fragment>
+            Melting since block <Link to={`/blocks/${frozenAccount.freezeBlockHeight}`} className="link">
+              {frozenAccount.unfreezingBlockHeight}
+            </Link> ({frozenAccount.unfreezingRemainingBlocks} blocks remaining)
+          </Fragment>
+        )
+      default:
+        return frozenAccount.state;
+    }
+  }
+  getFrozenAccountStateAsSentence(frozenAccount) {
+    // todo verify state options
+    switch(frozenAccount.state) {
+      case 'frozen':
+        return (
+          <Fragment>
+            {frozenAccount.amount} BOS frozen in account <Link to={`/accounts/${frozenAccount.address}`} className="link">
+              {stringFormatter.truncate(frozenAccount.address, 10, '...')}
+            </Link> in block <Link to={`/blocks/${frozenAccount.freezeBlockHeight}`} className="link">
+              {frozenAccount.freezeBlockHeight}
+            </Link>
+          </Fragment>
+        )
+      case 'melting':
+        return (
+          <Fragment>
+            {frozenAccount.amount} BOS melting in account <Link to={`/accounts/${frozenAccount.address}`} className="link">
+              {stringFormatter.truncate(frozenAccount.address, 10, '...')}
+            </Link> since block <Link to={`/blocks/${frozenAccount.unfreezingBlockHeight}`} className="link">
+              {frozenAccount.unfreezingBlockHeight}
+            </Link> ({frozenAccount.unfreezingRemainingBlocks} blocks remaining)
+          </Fragment>
+        )
+      default:
+        return frozenAccount.state;
+    }
+  }
   render() {
-    const { notFound, error, account, operations } = this.state;
+    const { notFound, error, account, operations, frozenAccounts } = this.state;
 
-    if(notFound) {
+    if (notFound) {
       return <NotFound/>
     }
 
-    if(error) {
+    if (error) {
       return <UnexpectedError/>
     }
 
@@ -80,6 +149,54 @@ class Account extends Component {
                 value={`${account.balance} BOS`}
               />
             </Fragment>
+          }
+        </Card>
+        <Card title="Freezing">
+          {
+            !frozenAccounts &&
+            <LoadingIndicator/>
+          }
+          {
+            frozenAccounts && frozenAccounts.data.length === 0 &&
+            <Fragment>
+              This account is not freezing any BOS
+            </Fragment>
+          }
+          {
+            frozenAccounts && frozenAccounts.data.length > 0 &&
+            <table className="table">
+              <tbody>
+                <MediaQuery maxWidth={768}>
+                  {frozenAccounts.data.map((frozenAccount) => (
+                    <tr className="table__content" key={frozenAccount.address}>
+                      <td className="table__item">
+                        {this.getFrozenAccountStateAsSentence(frozenAccount)}
+                      </td>
+                    </tr>
+                  ))}
+                </MediaQuery>
+                <MediaQuery minWidth={769}>
+                  <tr className="table__header">
+                    <th className="table__item">Account</th>
+                    <th className="table__item">State</th>
+                    <th className="table__item  table__number">Amount</th>
+                  </tr>
+                  {frozenAccounts.data.map((frozenAccount) => (
+                    <tr className="table__content" key={frozenAccount.address}>
+                      <td className="table__item">
+                        <Link to={`/accounts/${frozenAccount.address}`} className="link">
+                          {stringFormatter.truncate(frozenAccount.address, 10, '...')}
+                        </Link>
+                      </td>
+                      <td className="table__item">
+                        {this.getFormattedFrozenAccountState(frozenAccount)}
+                      </td>
+                      <td className="table__item table__number">{`${frozenAccount.amount} BOS`}</td>
+                    </tr>
+                  ))}
+                </MediaQuery>
+              </tbody>
+            </table>
           }
         </Card>
         <Card title="Operations">
