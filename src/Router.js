@@ -15,20 +15,20 @@ class Router extends Component {
     return (
       <React.Fragment>
         <Switch>
-          <Route path="/transactions/:hash" render={props => {
+          <Route exact path="/transactions/:hash" render={props => {
             return <Transaction {...props} key={props.match.params.hash}/>
           }}/>/>
-          <Route path="/transactions/" component={Transactions}/>
-          <Route path="/operations" component={Operations}/>
-          <Route path="/blocks/:hash" render={props => {
+          <Route exact path="/transactions" component={Transactions}/>
+          <Route exact path="/operations" component={Operations}/>
+          <Route exact path="/blocks/:hash" render={props => {
             return <Block {...props} key={props.match.params.hash}/>
           }}/>
-          <Route path="/blocks" component={Blocks}/>
-          <Route path="/freezing" component={FrozenAccounts}/>
-          <Route path="/accounts/:publicKey" render={props => {
+          <Route exact path="/blocks" component={Blocks}/>
+          <Route exact path="/freezing" component={FrozenAccounts}/>
+          <Route exact path="/accounts/:publicKey" render={props => {
             return <Account {...props} key={props.match.params.publicKey}/>
           }}/>
-          <Route path="/" component={Dashboard}/>
+          <Route exact path="/" component={Dashboard}/>
           <Route component={NotFound} />
         </Switch>
       </React.Fragment>
