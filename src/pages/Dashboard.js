@@ -7,11 +7,8 @@ import OutputText from '../components/OutputText';
 import dateFormatter from '../util/formatters/date.formatter';
 
 class Dashboard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      netInformation: undefined
-    }
+  state = {
+    netInformation: undefined
   }
   async componentDidMount() {
     this.setState({
