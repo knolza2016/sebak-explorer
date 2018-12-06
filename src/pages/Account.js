@@ -83,7 +83,7 @@ class Account extends Component {
       case 'melting':
         return (
           <Fragment>
-            Melting since block <Link to={`/blocks/${frozenAccount.freezeBlockHeight}`} className="link">
+            Unfreezing since block <Link to={`/blocks/${frozenAccount.freezeBlockHeight}`} className="link">
               {frozenAccount.unfreezingBlockHeight}
             </Link> ({frozenAccount.unfreezingRemainingBlocks} blocks remaining)
           </Fragment>
@@ -108,7 +108,7 @@ class Account extends Component {
       case 'melting':
         return (
           <Fragment>
-            {frozenAccount.amount} BOS melting in account <Link to={`/accounts/${frozenAccount.address}`} className="link">
+            {frozenAccount.amount} BOS unfreezing in account <Link to={`/accounts/${frozenAccount.address}`} className="link">
               {stringFormatter.truncate(frozenAccount.address, 10, '...')}
             </Link> since block <Link to={`/blocks/${frozenAccount.unfreezingBlockHeight}`} className="link">
               {frozenAccount.unfreezingBlockHeight}
