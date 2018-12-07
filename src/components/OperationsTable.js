@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import stringFormatter from '../util/formatters/string.formatter';
 import dateFormatter from '../util/formatters/date.formatter';
+import { currencyFormatter } from '../util/formatters';
 import MediaQuery from 'react-responsive';
 
 class OperationsTable extends Component {
@@ -30,7 +31,7 @@ class OperationsTable extends Component {
               {stringFormatter.truncate(operation.source, 10, '...')}
             </Link> created account <Link to={`/accounts/${operation.target}`} className="link">
               {stringFormatter.truncate(operation.target, 10, '...')}
-            </Link> with balance of {operation.amount} BOS in transaction <Link to={`/transactions/${operation.transaction_hash}`} className="link">
+            </Link> with balance of {currencyFormatter.formatAsBos(operation.amount)} BOS in transaction <Link to={`/transactions/${operation.transaction_hash}`} className="link">
               {stringFormatter.truncate(operation.transaction_hash, 10, '...')}
             </Link> on {dateFormatter.formatAsDatetime(operation.date)}
           </Fragment>
@@ -40,7 +41,7 @@ class OperationsTable extends Component {
           <Fragment>
             <Link to={`/accounts/${operation.source}`} className="link">
               {stringFormatter.truncate(operation.source, 10, '...')}
-            </Link> paid {operation.amount} BOS to <Link to={`/accounts/${operation.target}`} className="link">
+            </Link> paid {currencyFormatter.formatAsBos(operation.amount)} BOS to <Link to={`/accounts/${operation.target}`} className="link">
               {stringFormatter.truncate(operation.target, 10, '...')}
             </Link> in transaction <Link to={`/transactions/${operation.transaction_hash}`} className="link">
               {stringFormatter.truncate(operation.transaction_hash, 10, '...')}
@@ -52,7 +53,7 @@ class OperationsTable extends Component {
           <Fragment>
             <Link to={`/accounts/${operation.source}`} className="link">
               {stringFormatter.truncate(operation.source, 10, '...')}
-            </Link> collected transaction fee of {operation.amount} BOS for <Link to={`/accounts/${operation.target}`} className="link">
+            </Link> collected transaction fee of {currencyFormatter.formatAsBos(operation.amount)} BOS for <Link to={`/accounts/${operation.target}`} className="link">
               {stringFormatter.truncate(operation.target, 10, '...')}
             </Link> in transaction <Link to={`/transactions/${operation.transaction_hash}`} className="link">
               {stringFormatter.truncate(operation.transaction_hash, 10, '...')}
@@ -64,7 +65,7 @@ class OperationsTable extends Component {
           <Fragment>
             <Link to={`/accounts/${operation.source}`} className="link">
               {stringFormatter.truncate(operation.source, 10, '...')}
-            </Link> inflated supply with {operation.amount} BOS to <Link to={`/accounts/${operation.target}`} className="link">
+            </Link> inflated supply with {currencyFormatter.formatAsBos(operation.amount)} BOS to <Link to={`/accounts/${operation.target}`} className="link">
               {stringFormatter.truncate(operation.target, 10, '...')}
             </Link> in transaction <Link to={`/transactions/${operation.transaction_hash}`} className="link">
               {stringFormatter.truncate(operation.transaction_hash, 10, '...')}
@@ -128,7 +129,7 @@ class OperationsTable extends Component {
                 </td>
                 <td className="table__item">{this.getFormattedType(operation.type)}</td>
                 <td className="table__item">{dateFormatter.formatAsDatetime(operation.date)}</td>
-                <td className="table__item table__number">{isNaN(operation.amount) ? '' : `${operation.amount} BOS`}</td>
+                <td className="table__item table__number">{isNaN(operation.amount) ? '' : `${currencyFormatter.formatAsBos(operation.amount)} BOS`}</td>
               </tr>
             ))}
           </MediaQuery>

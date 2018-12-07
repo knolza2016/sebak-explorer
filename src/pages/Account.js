@@ -9,6 +9,7 @@ import NotFound from '../pages/NotFound';
 import UnexpectedError from '../pages/UnexpectedError';
 import stringFormatter from '../util/formatters/string.formatter';
 import MediaQuery from 'react-responsive';
+import { currencyFormatter } from '../util/formatters';
 
 class Account extends Component {
   state = {
@@ -98,7 +99,7 @@ class Account extends Component {
       case 'frozen':
         return (
           <Fragment>
-            {frozenAccount.amount} BOS frozen in account <Link to={`/accounts/${frozenAccount.address}`} className="link">
+            {currencyFormatter.formatAsBos(frozenAccount.amount)} BOS frozen in account <Link to={`/accounts/${frozenAccount.address}`} className="link">
               {stringFormatter.truncate(frozenAccount.address, 10, '...')}
             </Link> in block <Link to={`/blocks/${frozenAccount.freezeBlockHeight}`} className="link">
               {frozenAccount.freezeBlockHeight}
@@ -108,7 +109,7 @@ class Account extends Component {
       case 'melting':
         return (
           <Fragment>
-            {frozenAccount.amount} BOS unfreezing in account <Link to={`/accounts/${frozenAccount.address}`} className="link">
+            {currencyFormatter.formatAsBos(frozenAccount.amount)} BOS unfreezing in account <Link to={`/accounts/${frozenAccount.address}`} className="link">
               {stringFormatter.truncate(frozenAccount.address, 10, '...')}
             </Link> since block <Link to={`/blocks/${frozenAccount.unfreezingBlockHeight}`} className="link">
               {frozenAccount.unfreezingBlockHeight}
@@ -146,7 +147,7 @@ class Account extends Component {
               />
               <OutputText
                 label="Balance"
-                value={`${account.balance} BOS`}
+                value={`${currencyFormatter.formatAsBos(account.balance)} BOS`}
               />
             </Fragment>
           }
@@ -191,7 +192,7 @@ class Account extends Component {
                       <td className="table__item">
                         {this.getFormattedFrozenAccountState(frozenAccount)}
                       </td>
-                      <td className="table__item table__number">{`${frozenAccount.amount} BOS`}</td>
+                      <td className="table__item table__number">{`${currencyFormatter.formatAsBos(frozenAccount.amount)} BOS`}</td>
                     </tr>
                   ))}
                 </MediaQuery>

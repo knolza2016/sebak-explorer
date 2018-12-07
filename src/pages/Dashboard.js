@@ -5,6 +5,7 @@ import Card from '../components/Card';
 import LoadingIndicator from '../components/LoadingIndicator';
 import OutputText from '../components/OutputText';
 import dateFormatter from '../util/formatters/date.formatter';
+import { currencyFormatter } from '../util/formatters';
 
 class Dashboard extends Component {
   state = {
@@ -47,7 +48,7 @@ class Dashboard extends Component {
               </Link>
             </OutputText>
             <OutputText label="Total supply">
-              {netInformation.supply} BOS
+              {currencyFormatter.formatAsBos(netInformation.supply)} BOS
             </OutputText>
           </Fragment>
         }
