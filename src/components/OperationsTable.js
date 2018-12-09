@@ -2,26 +2,10 @@ import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import stringFormatter from '../util/formatters/string.formatter';
 import dateFormatter from '../util/formatters/date.formatter';
-import { currencyFormatter } from '../util/formatters';
+import { currencyFormatter, typeFormatter } from '../util/formatters';
 import MediaQuery from 'react-responsive';
 
 class OperationsTable extends Component {
-  getFormattedType(type) {
-    switch (type) {
-      case 'create-account':
-        return 'Create account'
-      case 'payment':
-        return 'Payment'
-      case 'collect-tx-fee':
-        return 'Collect transaction fee'
-      case 'inflation':
-        return "Inflation"
-      case 'unfreezing-request':
-        return "Unfreezing request"
-      default:
-        return type;
-    }
-  }
   getOperationAsSentence(operation) {
     switch (operation.type) {
       case 'create-account':
@@ -103,7 +87,7 @@ class OperationsTable extends Component {
           </MediaQuery>
           <MediaQuery minWidth={769}>
             <tr className="table__header">
-              <th className="table__item" width="15%">Transaction</th>
+              <th className="table__item" width="15%">Hash</th>
               <th className="table__item" width="15%">From</th>
               <th className="table__item" width="15%">To</th>
               <th className="table__item" width="18%">Type</th>
@@ -113,8 +97,8 @@ class OperationsTable extends Component {
             {this.props.operations.map((operation) => (
               <tr className="table__content" key={operation.hash}>
                 <td className="table__item">
-                  <Link to={`/transactions/${operation.transaction_hash}`} className="link">
-                    {stringFormatter.truncate(operation.transaction_hash, 10, '...')}
+                  <Link to={`/operations/${operation.hash}`} className="link">
+                    {stringFormatter.truncate(operation.hash, 10, '...')}
                   </Link>
                 </td>
                 <td className="table__item">
@@ -127,7 +111,7 @@ class OperationsTable extends Component {
                     {stringFormatter.truncate(operation.target, 10, '...')}
                   </Link>
                 </td>
-                <td className="table__item">{this.getFormattedType(operation.type)}</td>
+                <td className="table__item">{typeFormatter.formatOperationType(operation.type)}</td>
                 <td className="table__item">{dateFormatter.formatAsDatetime(operation.date)}</td>
                 <td className="table__item table__number">{isNaN(operation.amount) ? '' : `${currencyFormatter.formatAsBos(operation.amount)} BOS`}</td>
               </tr>
