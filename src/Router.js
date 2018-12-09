@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import Blocks from "./pages/Blocks";
 import Block from './pages/Block';
 import FrozenAccounts from './pages/FrozenAccounts';
+import Operation from './pages/Operation';
 
 class Router extends Component {
   render() {
@@ -19,6 +20,7 @@ class Router extends Component {
             return <Transaction {...props} key={props.match.params.hash}/>
           }}/>/>
           <Route exact path="/transactions" component={Transactions}/>
+          <Route exact path="/operations/:hash" component={Operation}/>
           <Route exact path="/operations" component={Operations}/>
           <Route exact path="/blocks/:hash" render={props => {
             return <Block {...props} key={props.match.params.hash}/>
