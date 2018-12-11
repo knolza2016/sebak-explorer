@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import sebakService from '../sebak/service';
 import Card from '../components/Card';
 import OperationsTable from '../components/OperationsTable';
@@ -65,10 +66,11 @@ class Transaction extends Component {
                 label="Hash"
                 value={this.state.transaction.hash}
               />
-              <OutputText
-                label="Block"
-                value={this.state.transaction.block}
-              />
+              <OutputText label="Block">
+                <Link to={`/blocks/${this.state.transaction.block}`} className="link">
+                  {this.state.transaction.block}
+                </Link>
+              </OutputText>
               <OutputText
                 label="Date"
                 value={dateFormatter.formatAsDatetime(this.state.transaction.date)}
