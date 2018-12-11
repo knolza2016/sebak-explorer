@@ -7,6 +7,7 @@ import dateFormatter from '../util/formatters/date.formatter';
 import NotFound from '../pages/NotFound';
 import UnexpectedError from './UnexpectedError';
 import TransactionsTable from '../components/TransactionsTable';
+import { numberFormatter } from '../util/formatters';
 
 class Block extends Component {
   state = {
@@ -72,7 +73,7 @@ class Block extends Component {
               />
               <OutputText
                 label="Height"
-                value={this.state.block.height}
+                value={numberFormatter.format(this.state.block.height)}
               />
               <OutputText
                 label="Date"
