@@ -17,13 +17,17 @@ class Transaction extends Component {
     const transactionHash = hash.split("-")[1];
 
     sebakService.getTransaction(transactionHash)
-      .then(transaction => sebakService.getOperationsForTransaction(transaction))
-      .then(operations => this.getOperationInOperations(operations, hash))
+      .then(this.getOperation)
       .then(this.setOperationOnState)
       .catch(this.showErrorPage);
   }
-  getOperationInOperations = (operations, operationHash) => {
-    return operations.find(operation => operation.hash === operationHash);
+  getOperation = async (transaction) => {
+    const { hash } = this.props.match.params;
+    return this.getOperationByHash(await sebakService.getOperationsForTransaction(transaction, { limit: 100 }), hash)
+  }
+  getOperationByHash = async (operations, hash) => {
+    const operation = operations.data.find(operation => operation.hash === hash);
+    return operation ? operation : this.getOperationByHash(await operations.next(), hash);
   }
   setOperationOnState = operation => {
     this.setState({

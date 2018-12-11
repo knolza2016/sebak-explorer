@@ -79,14 +79,8 @@ export function getOperationsForTransaction(transaction, params = {}) {
   return new Promise(
     async function (resolve, reject) {
       try {
-        const operations = getRecords(await sebakApi.getOperationsForTransaction(transaction.hash, params));
-        const data = [];
-
-        for (const operation of operations) {
-          data.push(sebakTransformer.transformOperation(operation));
-        }
-
-        resolve(data);
+        const operations = await sebakApi.getOperationsForTransaction(transaction.hash, params);
+        resolve(getOperationsObject(operations));
       } catch (error) {
         reject(error);
       }
@@ -283,6 +277,24 @@ function getNetInformationObject(response) {
     data: {
       ...netInformation,
       supply: getSupply(netInformation.currentBlockHeight)
+    }
+  }
+}
+
+function getOperationsObject(response) {
+  const data = [];
+
+  for (const operation of response.data._embedded.records) {
+    data.push(sebakTransformer.transformOperation(operation));
+  }
+
+  return {
+    data,
+    next: async function () {
+      return getOperationsObject(await sebakApi.getLink(`${response.data._links.next.href}`));
+    },
+    previous: async function () {
+      return getOperationsObject(await sebakApi.getLink(`${response.data._links.prev.href}`));
     }
   }
 }
