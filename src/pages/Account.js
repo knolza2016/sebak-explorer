@@ -142,7 +142,7 @@ class Account extends Component {
             account &&
             <Fragment>
               <OutputText
-                label="Public key"
+                label="Public address"
                 value={account.address}
               />
               <OutputText

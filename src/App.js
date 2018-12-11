@@ -57,7 +57,7 @@ class App extends Component {
               <div className="control">
                 <input
                   className="input"
-                  placeholder="Enter transaction id or public key"
+                  placeholder="Enter transaction hash or public address"
                   value={this.state.identifier}
                   onChange={this.handleIdentifierChange}
                 >
