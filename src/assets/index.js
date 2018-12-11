@@ -1,1 +1,5 @@
-export { Logos } from './logos';
+import * as Logos from './logos';
+
+export {
+  Logos
+}
