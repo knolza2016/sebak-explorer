@@ -1,11 +1,9 @@
 import moment from 'moment';
 
-const dateFormatter = {
+export {
   formatAsDatetime,
   formatAsTimeAgo
 }
-
-export default dateFormatter;
 
 function formatAsDatetime(date) {
   const momentDate = moment(date);

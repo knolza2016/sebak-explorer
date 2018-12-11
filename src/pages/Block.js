@@ -3,11 +3,10 @@ import sebakService from '../sebak/service';
 import Card from '../components/Card';
 import LoadingIndicator from '../components/LoadingIndicator';
 import OutputText from '../components/OutputText';
-import dateFormatter from '../util/formatters/date.formatter';
 import NotFound from '../pages/NotFound';
 import UnexpectedError from './UnexpectedError';
 import TransactionsTable from '../components/TransactionsTable';
-import { numberFormatter } from '../util/formatters';
+import { dateFormatter, numberFormatter } from '../util/formatters';
 
 class Block extends Component {
   state = {

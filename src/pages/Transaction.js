@@ -5,7 +5,7 @@ import Card from '../components/Card';
 import OperationsTable from '../components/OperationsTable';
 import LoadingIndicator from '../components/LoadingIndicator';
 import OutputText from '../components/OutputText';
-import dateFormatter from '../util/formatters/date.formatter';
+import { dateFormatter } from '../util/formatters';
 import NotFound from '../pages/NotFound';
 
 class Transaction extends Component {

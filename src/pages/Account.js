@@ -7,9 +7,8 @@ import LoadingIndicator from '../components/LoadingIndicator';
 import OutputText from '../components/OutputText';
 import NotFound from '../pages/NotFound';
 import UnexpectedError from '../pages/UnexpectedError';
-import stringFormatter from '../util/formatters/string.formatter';
 import MediaQuery from 'react-responsive';
-import { currencyFormatter, numberFormatter } from '../util/formatters';
+import { currencyFormatter, numberFormatter, stringFormatter } from '../util/formatters';
 
 class Account extends Component {
   state = {

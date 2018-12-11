@@ -4,8 +4,7 @@ import sebakService from '../sebak/service';
 import Card from '../components/Card';
 import LoadingIndicator from '../components/LoadingIndicator';
 import OutputText from '../components/OutputText';
-import dateFormatter from '../util/formatters/date.formatter';
-import { currencyFormatter, numberFormatter } from '../util/formatters';
+import { currencyFormatter, dateFormatter, numberFormatter } from '../util/formatters';
 
 class Dashboard extends Component {
   state = {

@@ -1,8 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import stringFormatter from '../util/formatters/string.formatter';
-import dateFormatter from '../util/formatters/date.formatter';
-import { currencyFormatter, typeFormatter } from '../util/formatters';
+import { currencyFormatter, dateFormatter, typeFormatter, stringFormatter } from '../util/formatters';
 import MediaQuery from 'react-responsive';
 
 class OperationsTable extends Component {

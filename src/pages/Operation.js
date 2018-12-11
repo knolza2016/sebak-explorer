@@ -4,9 +4,8 @@ import sebakService from '../sebak/service';
 import Card from '../components/Card';
 import LoadingIndicator from '../components/LoadingIndicator';
 import OutputText from '../components/OutputText';
-import dateFormatter from '../util/formatters/date.formatter';
 import NotFound from '../pages/NotFound';
-import { typeFormatter, currencyFormatter } from '../util/formatters';
+import { currencyFormatter, dateFormatter, typeFormatter } from '../util/formatters';
 
 class Transaction extends Component {
   state = {

@@ -1,4 +1,6 @@
-export { formatOperationType }
+export {
+  formatOperationType
+}
 
 function formatOperationType(type) {
   switch (type) {

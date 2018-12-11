@@ -1,6 +1,8 @@
 import numbro from 'numbro';
 
-export { formatAsBos }
+export {
+  formatAsBos
+}
 
 function formatAsBos(amount) {
   return numbro(amount).format({

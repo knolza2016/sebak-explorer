@@ -1,10 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import stringFormatter from '../util/formatters/string.formatter';
 import MediaQuery from 'react-responsive';
 import ActionButton from '../components/ActionButton';
 import LoadingIndicator from '../components/LoadingIndicator';
-import { currencyFormatter, numberFormatter } from '../util/formatters';
+import { currencyFormatter, numberFormatter, stringFormatter } from '../util/formatters';
 
 class FrozenAccountsTable extends Component {
   state = {
