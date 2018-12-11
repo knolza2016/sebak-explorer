@@ -59,8 +59,8 @@ class Transaction extends Component {
             <Fragment>
               <OutputText label="Hash" value={operation.hash}/>
               <OutputText label="Transaction">
-                <Link to={`/transactions/${operation.transaction_hash}`} className="link">
-                  {operation.transaction_hash}
+                <Link to={`/transactions/${operation.transactionHash}`} className="link">
+                  {operation.transactionHash}
                 </Link>
               </OutputText>
               <OutputText label="Type" value={typeFormatter.formatOperationType(operation.type)}/>
