@@ -5,7 +5,7 @@ import Card from '../components/Card';
 import LoadingIndicator from '../components/LoadingIndicator';
 import OutputText from '../components/OutputText';
 import dateFormatter from '../util/formatters/date.formatter';
-import { currencyFormatter } from '../util/formatters';
+import { currencyFormatter, numberFormatter } from '../util/formatters';
 
 class Dashboard extends Component {
   state = {
@@ -34,17 +34,17 @@ class Dashboard extends Component {
             />
             <OutputText label="Current block height">
               <Link to={`/blocks/${netInformation.currentBlockHash}`} className="link">
-                {netInformation.currentBlockHeight}
+                {numberFormatter.format(netInformation.currentBlockHeight)}
               </Link>
             </OutputText>
             <OutputText label="Total transactions">
               <Link to={`/transactions`} className="link">
-                {netInformation.totalTransactions}
+                {numberFormatter.format(netInformation.totalTransactions)}
               </Link>
             </OutputText>
             <OutputText label="Total operations">
               <Link to={`/operations`} className="link">
-                {netInformation.totalOperations}
+                {numberFormatter.format(netInformation.totalOperations)}
               </Link>
             </OutputText>
             <OutputText label="Total supply">
