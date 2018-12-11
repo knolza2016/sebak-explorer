@@ -9,7 +9,7 @@ import NotFound from '../pages/NotFound';
 import UnexpectedError from '../pages/UnexpectedError';
 import stringFormatter from '../util/formatters/string.formatter';
 import MediaQuery from 'react-responsive';
-import { currencyFormatter } from '../util/formatters';
+import { currencyFormatter, numberFormatter } from '../util/formatters';
 
 class Account extends Component {
   state = {
@@ -77,7 +77,7 @@ class Account extends Component {
         return (
           <Fragment>
             Frozen in block <Link to={`/blocks/${frozenAccount.freezeBlockHeight}`} className="link">
-              {frozenAccount.freezeBlockHeight}
+              {numberFormatter.format(frozenAccount.freezeBlockHeight)}
             </Link>
           </Fragment>
         )
@@ -85,8 +85,8 @@ class Account extends Component {
         return (
           <Fragment>
             Unfreezing since block <Link to={`/blocks/${frozenAccount.freezeBlockHeight}`} className="link">
-              {frozenAccount.unfreezingBlockHeight}
-            </Link> ({frozenAccount.unfreezingRemainingBlocks} blocks remaining)
+              {numberFormatter.format(frozenAccount.unfreezingBlockHeight)}
+            </Link> ({numberFormatter.format(frozenAccount.unfreezingRemainingBlocks)} blocks remaining)
           </Fragment>
         )
       default:
@@ -102,7 +102,7 @@ class Account extends Component {
             {currencyFormatter.formatAsBos(frozenAccount.amount)} BOS frozen in account <Link to={`/accounts/${frozenAccount.address}`} className="link">
               {stringFormatter.truncate(frozenAccount.address, 10, '...')}
             </Link> in block <Link to={`/blocks/${frozenAccount.freezeBlockHeight}`} className="link">
-              {frozenAccount.freezeBlockHeight}
+              {numberFormatter.format(frozenAccount.freezeBlockHeight)}
             </Link>
           </Fragment>
         )
@@ -112,8 +112,8 @@ class Account extends Component {
             {currencyFormatter.formatAsBos(frozenAccount.amount)} BOS unfreezing in account <Link to={`/accounts/${frozenAccount.address}`} className="link">
               {stringFormatter.truncate(frozenAccount.address, 10, '...')}
             </Link> since block <Link to={`/blocks/${frozenAccount.unfreezingBlockHeight}`} className="link">
-              {frozenAccount.unfreezingBlockHeight}
-            </Link> ({frozenAccount.unfreezingRemainingBlocks} blocks remaining)
+              {numberFormatter.format(frozenAccount.unfreezingBlockHeight)}
+            </Link> ({numberFormatter.format(frozenAccount.unfreezingRemainingBlocks)} blocks remaining)
           </Fragment>
         )
       default:
