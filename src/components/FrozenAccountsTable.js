@@ -4,6 +4,7 @@ import stringFormatter from '../util/formatters/string.formatter';
 import MediaQuery from 'react-responsive';
 import ActionButton from '../components/ActionButton';
 import LoadingIndicator from '../components/LoadingIndicator';
+import { currencyFormatter, numberFormatter } from '../util/formatters';
 
 class FrozenAccountsTable extends Component {
   state = {
@@ -81,10 +82,10 @@ class FrozenAccountsTable extends Component {
                       <td className="table__item">
                         <Link to={`/accounts/${frozenAccount.parentAddress}`} className="link">
                           {stringFormatter.truncate(frozenAccount.parentAddress, 10, '...')}
-                        </Link> {this.getStateInSimplePastTense(frozenAccount.state)} {frozenAccount.amount} BOS in <Link to={`/accounts/${frozenAccount.address}`} className="link">
+                        </Link> {this.getStateInSimplePastTense(frozenAccount.state)} {currencyFormatter.formatAsBos(frozenAccount.amount)} BOS in <Link to={`/accounts/${frozenAccount.address}`} className="link">
                           {stringFormatter.truncate(frozenAccount.address, 10, '...')}
                         </Link> in block <Link to={`/blocks/${frozenAccount.freezeBlockHeight}`} className="link">
-                            {frozenAccount.freezeBlockHeight}
+                            {numberFormatter.format(frozenAccount.freezeBlockHeight)}
                           </Link>
                       </td>
                     </tr>
@@ -112,14 +113,14 @@ class FrozenAccountsTable extends Component {
                       </td>
                       <td className="table__item">
                         <Link to={`/blocks/${frozenAccount.freezeBlockHeight}`} className="link">
-                          {frozenAccount.freezeBlockHeight}
+                          {numberFormatter.format(frozenAccount.freezeBlockHeight)}
                         </Link>
                       </td>
                       <td className="table__item">
                         {this.getFormattedState(frozenAccount.state)}
                       </td>
                       <td className="table__item table__number">
-                        {frozenAccount.amount} BOS
+                        {currencyFormatter.formatAsBos(frozenAccount.amount)} BOS
                       </td>
                     </tr>
                   ))}
