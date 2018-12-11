@@ -83,7 +83,7 @@ class Transaction extends Component {
           }
           {
             this.state.transaction.operations &&
-            <OperationsTable operations={this.state.transaction.operations}></OperationsTable>
+            <OperationsTable operations={this.state.transaction.operations.data}></OperationsTable>
           }
         </Card>
       </Fragment>
