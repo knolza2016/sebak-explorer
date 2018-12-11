@@ -7,6 +7,7 @@ import Card from '../components/Card';
 import LoadingIndicator from '../components/LoadingIndicator';
 import ActionButton from '../components/ActionButton';
 import MediaQuery from 'react-responsive';
+import { numberFormatter } from '../util/formatters';
 
 class Blocks extends Component {
   constructor(props) {
@@ -72,7 +73,9 @@ class Blocks extends Component {
                     {this.state.blocks.data.map((block) => (
                       <tr className="table__content" key={block.hash}>
                         <td className="table__item">
-                          Height {block.height} confirmed by <Link to={`/blocks/${block.hash}`} className="link">
+                          Height <Link to={`/blocks/${block.height}`} className="link">
+                            {numberFormatter.format(block.height)}
+                          </Link> confirmed by <Link to={`/blocks/${block.hash}`} className="link">
                             {stringFormatter.truncate(block.hash, 10, '...')}
                           </Link> on {dateFormatter.formatAsDatetime(block.date)}
                         </td>
@@ -94,7 +97,7 @@ class Blocks extends Component {
                           </td>
                           <td className="table__item">
                             <Link to={`/blocks/${block.height}`} className="link">
-                              {block.height}
+                              {numberFormatter.format(block.height)}
                             </Link>
                           </td>
                           <td className="table__item">{dateFormatter.formatAsDatetime(block.date)}</td>
