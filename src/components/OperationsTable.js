@@ -13,8 +13,8 @@ class OperationsTable extends Component {
               {stringFormatter.truncate(operation.source, 10, '...')}
             </Link> created account <Link to={`/accounts/${operation.target}`} className="link">
               {stringFormatter.truncate(operation.target, 10, '...')}
-            </Link> with balance of {currencyFormatter.formatAsBos(operation.amount)} BOS in transaction <Link to={`/transactions/${operation.transaction_hash}`} className="link">
-              {stringFormatter.truncate(operation.transaction_hash, 10, '...')}
+            </Link> with balance of {currencyFormatter.formatAsBos(operation.amount)} BOS in operation <Link to={`/operations/${operation.hash}`} className="link">
+              {stringFormatter.truncate(operation.hash, 10, '...')}
             </Link> on {dateFormatter.formatAsDatetime(operation.date)}
           </Fragment>
         )
@@ -25,8 +25,8 @@ class OperationsTable extends Component {
               {stringFormatter.truncate(operation.source, 10, '...')}
             </Link> paid {currencyFormatter.formatAsBos(operation.amount)} BOS to <Link to={`/accounts/${operation.target}`} className="link">
               {stringFormatter.truncate(operation.target, 10, '...')}
-            </Link> in transaction <Link to={`/transactions/${operation.transaction_hash}`} className="link">
-              {stringFormatter.truncate(operation.transaction_hash, 10, '...')}
+            </Link> in operation <Link to={`/operation/${operation.hash}`} className="link">
+              {stringFormatter.truncate(operation.hash, 10, '...')}
             </Link> on {dateFormatter.formatAsDatetime(operation.date)}
           </Fragment>
         )
@@ -37,8 +37,8 @@ class OperationsTable extends Component {
               {stringFormatter.truncate(operation.source, 10, '...')}
             </Link> collected transaction fee of {currencyFormatter.formatAsBos(operation.amount)} BOS for <Link to={`/accounts/${operation.target}`} className="link">
               {stringFormatter.truncate(operation.target, 10, '...')}
-            </Link> in transaction <Link to={`/transactions/${operation.transaction_hash}`} className="link">
-              {stringFormatter.truncate(operation.transaction_hash, 10, '...')}
+            </Link> in operation <Link to={`/operations/${operation.hash}`} className="link">
+              {stringFormatter.truncate(operation.hash, 10, '...')}
             </Link> on {dateFormatter.formatAsDatetime(operation.date)}
           </Fragment>
         )
@@ -49,8 +49,8 @@ class OperationsTable extends Component {
               {stringFormatter.truncate(operation.source, 10, '...')}
             </Link> inflated supply with {currencyFormatter.formatAsBos(operation.amount)} BOS to <Link to={`/accounts/${operation.target}`} className="link">
               {stringFormatter.truncate(operation.target, 10, '...')}
-            </Link> in transaction <Link to={`/transactions/${operation.transaction_hash}`} className="link">
-              {stringFormatter.truncate(operation.transaction_hash, 10, '...')}
+            </Link> in operation <Link to={`/operations/${operation.hash}`} className="link">
+              {stringFormatter.truncate(operation.hash, 10, '...')}
             </Link> on {dateFormatter.formatAsDatetime(operation.date)}
           </Fragment>
         )
@@ -59,8 +59,8 @@ class OperationsTable extends Component {
           <Fragment>
             <Link to={`/accounts/${operation.source}`} className="link">
               {stringFormatter.truncate(operation.source, 10, '...')}
-            </Link> requested unfreezing in transaction <Link to={`/transactions/${operation.transaction_hash}`} className="link">
-              {stringFormatter.truncate(operation.transaction_hash, 10, '...')}
+            </Link> requested unfreezing in operation <Link to={`/operations/${operation.hash}`} className="link">
+              {stringFormatter.truncate(operation.hash, 10, '...')}
             </Link> on {dateFormatter.formatAsDatetime(operation.date)}
           </Fragment>
         )
