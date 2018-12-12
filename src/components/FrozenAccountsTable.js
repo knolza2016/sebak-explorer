@@ -46,6 +46,8 @@ class FrozenAccountsTable extends Component {
     switch(state) {
       case 'frozen':
         return 'Frozen';
+      case 'unfrozen':
+        return 'Unfrozen';
       case 'melting':
         return 'Melting';
       default:
@@ -57,6 +59,8 @@ class FrozenAccountsTable extends Component {
     switch(state) {
       case 'frozen':
         return 'froze';
+      case 'unfrozen':
+        return 'unfroze';
       case 'melting':
         return 'melted';
       default:

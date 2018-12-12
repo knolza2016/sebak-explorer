@@ -10,6 +10,8 @@ import UnexpectedError from '../pages/UnexpectedError';
 import MediaQuery from 'react-responsive';
 import { currencyFormatter, numberFormatter, stringFormatter } from '../util/formatters';
 
+const UNFREEZING_PERIOD = 241920;
+
 class Account extends Component {
   state = {
     account: undefined,
@@ -80,6 +82,14 @@ class Account extends Component {
             </Link>
           </Fragment>
         )
+      case 'unfrozen':
+        return (
+          <Fragment>
+            Unfrozen in block <Link to={`/blocks/${frozenAccount.unfreezingBlockHeight + UNFREEZING_PERIOD}`} className="link">
+              {numberFormatter.format(frozenAccount.unfreezingBlockHeight + UNFREEZING_PERIOD)}
+            </Link>
+          </Fragment>
+        )
       case 'melting':
         return (
           <Fragment>
@@ -102,6 +112,16 @@ class Account extends Component {
               {stringFormatter.truncate(frozenAccount.address, 10, '...')}
             </Link> in block <Link to={`/blocks/${frozenAccount.freezeBlockHeight}`} className="link">
               {numberFormatter.format(frozenAccount.freezeBlockHeight)}
+            </Link>
+          </Fragment>
+        )
+      case 'unfrozen':
+        return (
+          <Fragment>
+            {currencyFormatter.formatAsBos(frozenAccount.amount)} BOS unfrozen in account <Link to={`/accounts/${frozenAccount.address}`} className="link">
+              {stringFormatter.truncate(frozenAccount.address, 10, '...')}
+            </Link> in block <Link to={`/blocks/${frozenAccount.unfreezingBlockHeight}`} className="link">
+              {numberFormatter.format(frozenAccount.unfreezingBlockHeight + UNFREEZING_PERIOD)}
             </Link>
           </Fragment>
         )
