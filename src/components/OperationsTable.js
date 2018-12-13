@@ -25,7 +25,7 @@ class OperationsTable extends Component {
               {stringFormatter.truncate(operation.source, 10, '...')}
             </Link> paid {currencyFormatter.formatAsBos(operation.amount)} BOS to <Link to={`/accounts/${operation.target}`} className="link">
               {stringFormatter.truncate(operation.target, 10, '...')}
-            </Link> in operation <Link to={`/operation/${operation.hash}`} className="link">
+            </Link> in operation <Link to={`/operations/${operation.hash}`} className="link">
               {stringFormatter.truncate(operation.hash, 10, '...')}
             </Link> on {dateFormatter.formatAsDatetime(operation.date)}
           </Fragment>
