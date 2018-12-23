@@ -36,7 +36,9 @@ class Account extends Component {
       let operations = res[1];
       let frozenAccounts = res[2];
 
-      account.balance += frozenAccounts.data.reduce((acc, frozenAccount) => { return acc + frozenAccount.amount }, 0);
+      account.balance += frozenAccounts.data
+        .filter(frozenAccount => frozenAccount.state !== 'returned')
+        .reduce((balance, frozenAccount) => { return balance + frozenAccount.amount }, 0);
 
       this.setAccountOnState(account)
       this.setOperationsOnState(operations)
@@ -96,6 +98,14 @@ class Account extends Component {
             Unfreezing since block <Link to={`/blocks/${frozenAccount.freezeBlockHeight}`} className="link">
               {numberFormatter.format(frozenAccount.unfreezingBlockHeight)}
             </Link> ({numberFormatter.format(frozenAccount.unfreezingRemainingBlocks)} blocks remaining)
+          </Fragment>
+        )
+      case 'returned':
+        return (
+          <Fragment>
+            Returned in block <Link to={`/blocks/${frozenAccount.unfreezingBlockHeight + UNFREEZING_PERIOD}`} className="link">
+              {numberFormatter.format(frozenAccount.unfreezingBlockHeight + UNFREEZING_PERIOD)}
+            </Link>
           </Fragment>
         )
       default:
