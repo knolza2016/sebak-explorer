@@ -130,7 +130,7 @@ class Account extends Component {
           <Fragment>
             {currencyFormatter.formatAsBos(frozenAccount.amount)} BOS unfrozen in account <Link to={`/accounts/${frozenAccount.address}`} className="link">
               {stringFormatter.truncate(frozenAccount.address, 10, '...')}
-            </Link> in block <Link to={`/blocks/${frozenAccount.unfreezingBlockHeight}`} className="link">
+            </Link> in block <Link to={`/blocks/${frozenAccount.unfreezingBlockHeight + UNFREEZING_PERIOD}`} className="link">
               {numberFormatter.format(frozenAccount.unfreezingBlockHeight + UNFREEZING_PERIOD)}
             </Link>
           </Fragment>
@@ -143,6 +143,16 @@ class Account extends Component {
             </Link> since block <Link to={`/blocks/${frozenAccount.unfreezingBlockHeight}`} className="link">
               {numberFormatter.format(frozenAccount.unfreezingBlockHeight)}
             </Link> ({numberFormatter.format(frozenAccount.unfreezingRemainingBlocks)} blocks remaining)
+          </Fragment>
+        )
+      case 'returned':
+        return (
+          <Fragment>
+            {currencyFormatter.formatAsBos(frozenAccount.amount)} BOS returned from account <Link to={`/accounts/${frozenAccount.address}`} className="link">
+              {stringFormatter.truncate(frozenAccount.address, 10, '...')}
+            </Link> in block <Link to={`/blocks/${frozenAccount.unfreezingBlockHeight + UNFREEZING_PERIOD}`} className="link">
+              {numberFormatter.format(frozenAccount.unfreezingBlockHeight + UNFREEZING_PERIOD)}
+            </Link>
           </Fragment>
         )
       default:
