@@ -9,8 +9,7 @@ import NotFound from '../pages/NotFound';
 import UnexpectedError from '../pages/UnexpectedError';
 import MediaQuery from 'react-responsive';
 import { currencyFormatter, numberFormatter, stringFormatter } from '../util/formatters';
-
-const UNFREEZING_PERIOD = 241920;
+import { UNFREEZING_PERIOD } from '../sebak/variables';
 
 class Account extends Component {
   state = {
