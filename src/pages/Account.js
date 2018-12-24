@@ -9,7 +9,7 @@ import NotFound from '../pages/NotFound';
 import UnexpectedError from '../pages/UnexpectedError';
 import MediaQuery from 'react-responsive';
 import { currencyFormatter, numberFormatter, stringFormatter } from '../util/formatters';
-import { UNFREEZING_PERIOD } from '../sebak/variables';
+import { UNFREEZING_PERIOD, KNOWN_ACCOUNTS } from '../sebak/variables';
 
 class Account extends Component {
   state = {
@@ -73,7 +73,6 @@ class Account extends Component {
     }
   }
   getFormattedFrozenAccountState(frozenAccount) {
-    // todo verify state options
     switch(frozenAccount.state) {
       case 'frozen':
         return (
@@ -106,7 +105,6 @@ class Account extends Component {
     }
   }
   getFrozenAccountStateAsSentence(frozenAccount) {
-    // todo verify state options
     switch(frozenAccount.state) {
       case 'frozen':
         return (
@@ -150,6 +148,19 @@ class Account extends Component {
         return frozenAccount.state;
     }
   }
+  getBadgeForKnownAddress(address) {
+    switch(KNOWN_ACCOUNTS[address]) {
+      case 'BOScoin Foundation':
+      case 'BOScoin PF00':
+        return 'boscoin';
+      case 'KuCoin':
+        return 'kucoin';
+      case 'GDAC':
+        return 'gdac';
+      default:
+        return '';
+    }
+  }
   render() {
     const { notFound, error, account, operations, frozenAccounts } = this.state;
 
@@ -171,10 +182,13 @@ class Account extends Component {
           {
             account &&
             <Fragment>
-              <OutputText
-                label="Public address"
-                value={account.address}
-              />
+              <OutputText label="Public address">
+                {
+                  KNOWN_ACCOUNTS[account.address] !== undefined &&
+                  <span className={`badge badge--${this.getBadgeForKnownAddress(account.address)}`}>{KNOWN_ACCOUNTS[account.address]}</span>
+                }
+                {account.address}
+              </OutputText>
               <OutputText
                 label="Balance"
                 value={`${currencyFormatter.formatAsBos(account.balance)} BOS`}

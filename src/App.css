@@ -147,6 +147,49 @@ body {
   text-decoration: underline;
 }
 
+.badge {
+  border-radius: 3px;
+  padding: 2px 10px;
+  display: inline-block;
+  font-weight: 400;
+  font-size: 0.7rem;
+  color: #000;
+  background-color: #000;
+  border: 1px solid #000;
+  margin: 0 0.2rem;
+  font-weight: bold;
+}
+
+.badge:first-of-type {
+  margin: 0 0.2rem 0 0;
+}
+
+.badge:last-of-type {
+  margin: 0 0.4rem 0 0.2rem;
+}
+
+.badge:only-of-type {
+  margin: 0 0.4rem 0 0;
+}
+
+.badge--boscoin {
+  color: #FFF;
+  background-color: #133153;
+  border: 1px solid #133153;
+}
+
+.badge--kucoin {
+  color: #FFF;
+  background-color: #68B92E;
+  border: 1px solid #68B92E;
+}
+
+.badge--gdac {
+  color: #FFF;
+  background-color: #139DE0;
+  border: 1px solid #139DE0;
+}
+
 @media screen and (min-width: 1224px) {
   .container {
     margin-top: 100px;
