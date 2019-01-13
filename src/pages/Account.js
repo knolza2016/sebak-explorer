@@ -151,6 +151,7 @@ class Account extends Component {
   getBadgeForKnownAddress(address) {
     switch(KNOWN_ACCOUNTS[address]) {
       case 'BOScoin Foundation':
+      case 'BOScoin Commons Budget':
       case 'BOScoin PF00':
         return 'boscoin';
       case 'KuCoin':
