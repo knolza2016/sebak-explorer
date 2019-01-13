@@ -50,7 +50,7 @@ class FrozenAccountsTable extends Component {
         return 'Unfrozen';
       case 'melting':
         return 'Melting';
-      case 'melting':
+      case 'returned':
         return 'Returned';
       default:
         return frozenAccount.state;
