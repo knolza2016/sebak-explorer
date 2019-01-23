@@ -4,7 +4,7 @@ import sebakService from '../sebak/service';
 import Card from '../components/Card';
 import LoadingIndicator from '../components/LoadingIndicator';
 import OutputText from '../components/OutputText';
-import { currencyFormatter, dateFormatter, numberFormatter } from '../util/formatters';
+import { dateFormatter, numberFormatter } from '../util/formatters';
 
 class Dashboard extends Component {
   state = {
@@ -19,7 +19,7 @@ class Dashboard extends Component {
     const { netInformation } = this.state;
 
     return (
-      <Card title="Network information">
+      <Card title="SEBAK network information">
         {
           !netInformation &&
           <LoadingIndicator></LoadingIndicator>
@@ -28,7 +28,7 @@ class Dashboard extends Component {
           netInformation &&
           <Fragment>
             <OutputText
-              label="Version"
+              label="Mainnet version"
               value={`${netInformation.version} built on ${dateFormatter.formatAsDatetime(netInformation.buildDate)}`}
             />
             <OutputText label="Current block height">
@@ -45,9 +45,6 @@ class Dashboard extends Component {
               <Link to={`/operations`} className="link">
                 {numberFormatter.format(netInformation.totalOperations)}
               </Link>
-            </OutputText>
-            <OutputText label="Total supply">
-              {currencyFormatter.formatAsBos(netInformation.supply)} BOS
             </OutputText>
           </Fragment>
         }
