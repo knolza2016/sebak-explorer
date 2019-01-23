@@ -34,6 +34,10 @@
   height: 48px;
 }
 
+.navbar .brand span {
+  margin-left: 0.5rem;
+}
+
 .navbar__hamburger {
   display: none;
 }

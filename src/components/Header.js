@@ -9,8 +9,9 @@ class Header extends Component {
     return (
       <nav className="navbar">
         <div className="brand">
-        <Link to={`/`}>
+          <Link to={`/`}>
             <img src={Logos.Boscoin} alt="BOScoin explorer"/>
+            <span>Explorer</span>
           </Link>
         </div>
         <input id="navbar__collapser" className="navbar__hamburger" type="checkbox" />
