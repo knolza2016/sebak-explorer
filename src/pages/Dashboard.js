@@ -5,6 +5,8 @@ import Card from '../components/Card';
 import LoadingIndicator from '../components/LoadingIndicator';
 import OutputText from '../components/OutputText';
 import { dateFormatter, numberFormatter } from '../util/formatters';
+import { version as explorerVersion } from '../../package.json';
+import preval from 'preval.macro'
 
 class Dashboard extends Component {
   state = {
@@ -30,6 +32,10 @@ class Dashboard extends Component {
             <OutputText
               label="Mainnet version"
               value={`${netInformation.version} built on ${dateFormatter.formatAsDatetime(netInformation.buildDate)}`}
+            />
+            <OutputText
+              label="Explorer version"
+              value={`${explorerVersion} built on ${dateFormatter.formatAsDatetime(preval`module.exports = new Date();`)}`}
             />
             <OutputText label="Current block height">
               <Link to={`/blocks/${netInformation.currentBlockHash}`} className="link">
